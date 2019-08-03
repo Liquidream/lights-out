@@ -1,18 +1,24 @@
--- Welcome to your new Castle project!
--- https://castle.games/get-started
--- Castle uses Love2D 11.1 for rendering and input: https://love2d.org/
--- See here for some useful Love2D documentation:
--- https://love2d-community.github.io/love-api/
+require("sugarcoat/sugarcoat")
+sugar.utility.using_package(sugar.S, true)
+require("common")
+require("init")
+require("update")
+require("draw")
 
-local total_time_elapsed = 0
+-- local fields
+local x = 64
+local y = 64
 
-function love.draw()
-  local y_offset = 8 * math.sin(total_time_elapsed * 3)
-  love.graphics.print('Edit main.lua to get started!', 400, 300 + y_offset)
-  love.graphics.print('Press Cmd/Ctrl + R to reload.', 400, 316 + y_offset)
+function love.load()
+  init_sugarcoat()
+  
+  init_input()
 end
 
 function love.update(dt)
-  total_time_elapsed = total_time_elapsed + dt
+  game_update(dt)
 end
 
+function love.draw()
+  game_draw()
+end
