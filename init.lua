@@ -50,7 +50,8 @@ function init_player()
   player = {
     x = 30,
     y = 30,
-    dir = 3, --0=left, 1=right, 2=up, 3=down
+    angle = 0, --0=right, 0.25=top, 0.5=left, 0.75=down
+    --dir = 3, --0=left, 1=right, 2=up, 3=down
     walk_anim = {1,2,3,4}
   }
 end
