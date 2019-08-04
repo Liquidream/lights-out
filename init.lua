@@ -52,8 +52,13 @@ function init_player()
     y = 30,
     angle = 0, --0=right, 0.25=top, 0.5=left, 0.75=down
     --dir = 3, --0=left, 1=right, 2=up, 3=down
-    walk_anim = {1,2,3,4}
+    walk_anim = {16,17,18,19},
+    idle_anim = {18},
+    frame_pos = 1,
+    frame_delay = 10,
+    frame_count = 0,
   }
+  player.curr_anim = player.walk_anim
 end
 
 function load_assets()

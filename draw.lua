@@ -31,7 +31,7 @@ function draw_level()
   end
   
   -- draw player (current anim cycle)
-  aspr(19, player.x+4, player.y+4, player.angle)
+  aspr(player.curr_anim[player.frame_pos], player.x+4, player.y+4, player.angle)
   --spr(19, player.x, player.y)
   
 end

@@ -2,8 +2,16 @@
 --
 -- Constants
 --
+DEBUG_MODE = true
+GAME_WIDTH = 64  -- 16:9 aspect ratio that fits nicely
+GAME_HEIGHT = 64 -- within the default Castle window size
+GAME_SCALE = 3
+GAME_STATE = { SPLASH=0, TITLE=1, INFO=2, LVL_INTRO=3, LVL_PLAY=4, LVL_END=5, LOSE_LIFE=6, GAME_OVER=7 }
+COL_START = 38
+COL_PATH = 45
+COL_FINISH = 8
 
--- Andrew Kensler
+-- Andrew Kensler (+another black!)
 -- https://lospec.com/palette-list/andrew-kensler-54
 ak54 = {
     0x000000, 0x05fec1, 0x32af87, 0x387261,  
@@ -43,28 +51,9 @@ fadeBlackTable={
 }
 
 --
--- Constants
---
-DEBUG_MODE = true
-GAME_WIDTH = 64  -- 16:9 aspect ratio that fits nicely
-GAME_HEIGHT = 64 -- within the default Castle window size
-GAME_SCALE = 3
-GAME_STATE = { SPLASH=0, TITLE=1, INFO=2, LVL_INTRO=3, LVL_PLAY=4, LVL_END=5, LOSE_LIFE=6, GAME_OVER=7 }
-COL_START = 38
-COL_PATH = 45
-COL_FINISH = 8
-
---PLAYER_MAX_SPEED = 100
-
-
---
 -- Globals
 --
 curr_level = 1
-
---
--- Global functions
---
 
 
 --
