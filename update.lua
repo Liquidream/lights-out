@@ -1,11 +1,18 @@
 
 function update_game(dt)
   update_player(dt)
+  game_time = game_time + 1
 end
 
 function update_player(dt)
-  if btn(0) then player.x = player.x - 1 end
-  if btn(1) then player.x = player.x + 1 end
-  if btn(2) then player.y = player.y - 1 end
-  if btn(3) then player.y = player.y + 1 end
+
+  -- handle player control/movement
+  if btnp(0) then player.x = player.x - 8 end
+  if btnp(1) then player.x = player.x + 8 end
+  if btnp(2) then player.y = player.y - 8 end
+  if btnp(3) then player.y = player.y + 8 end
+
+  -- keep player within the screen
+  player.x = mid(0,player.x,56)
+  player.y = mid(0,player.y,56)
 end
