@@ -5,20 +5,19 @@ require("init")
 require("update")
 require("draw")
 
--- local fields
-local x = 64
-local y = 64
+
 
 function love.load()
-  init_sugarcoat()
-  
+  init_sugarcoat()  
+  load_assets()
   init_input()
+  init_game()
 end
 
 function love.update(dt)
-  game_update(dt)
+  update_game(dt)
 end
 
 function love.draw()
-  game_draw()
+  draw_game()
 end

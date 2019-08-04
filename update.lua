@@ -1,11 +1,11 @@
 
-function game_update(dt)
-  player_update(dt)
+function update_game(dt)
+  update_player(dt)
 end
 
-function player_update(dt)
-  if btn(0) then x = x - 2 end
-  if btn(1) then x = x + 2 end
-  if btn(2) then y = y - 2 end
-  if btn(3) then y = y + 2 end
+function update_player(dt)
+  if btn(0) then player.x = player.x - 1 end
+  if btn(1) then player.x = player.x + 1 end
+  if btn(2) then player.y = player.y - 1 end
+  if btn(3) then player.y = player.y + 1 end
 end
