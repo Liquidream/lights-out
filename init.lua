@@ -33,17 +33,16 @@ function load_level(lvl_num)
       if col==COL_START then
         -- found start
         log("found player start at: "..x..","..y)
+        -- place player at start
         player.x,player.y = x*8,y*8
+        player.tx,player.ty = x,y
       else
       end
     end
   end
 
-  -- todo: place player at start
-  -- todo: 
-  -- todo: 
-  -- todo: 
-  -- todo: 
+  -- check the first tile (player start)
+  checkTile()
 end
 
 function init_player()
@@ -60,7 +59,7 @@ function init_player()
     frame_count = 0,
     moving = false,
     moveFrameCount = 0,
-
+    tileHistory={},
     moveCount = 0, -- number of moves player has made
   }
   player.curr_anim = player.idle_anim
@@ -75,6 +74,8 @@ function init_player_move(angle, dx, dy)
   player.dy = (pxDist/frames) * dy
   player.moveFrameCount = frames
   player.moving = true
+  player.newX = player.x+(8*dx)
+  player.newY = player.y+(8*dy)
   -- switch to a "walking" anim
   init_anim(player, 
        player.moveCount%2==0 

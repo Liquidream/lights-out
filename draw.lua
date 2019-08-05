@@ -17,15 +17,18 @@ function draw_level()
     for y=0,15 do
       local col=sget(x, y, "levels")
       -- handle level data
-      if col==COL_START then
-        -- found start
-        spr(0, x*8, y*8)
-      elseif col==COL_PATH then
-        -- found path
-        spr(1, x*8, y*8)
-      elseif col==COL_FINISH then
-        -- found end
-        spr(2, x*8, y*8)
+      if game_time < 100 
+       or player.tileHistory[x..","..y] then
+        if col==COL_START then
+          -- draw start
+          spr(0, x*8, y*8)
+        elseif col==COL_PATH then
+          -- draw path?
+          spr(1, x*8, y*8)
+        elseif col==COL_FINISH then
+          -- draw end
+          spr(2, x*8, y*8)
+        end
       end
     end
   end
