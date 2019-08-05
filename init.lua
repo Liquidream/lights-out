@@ -18,7 +18,7 @@ end
 function init_game()
   init_player()
   load_level(curr_level)
-
+  init_detail_anims()
   -- reset game time
   game_time = 0
 end
@@ -103,4 +103,25 @@ function load_assets()
 
   -- todo: load sfx + music
 
+end
+
+function init_detail_anims()
+  -- random monsters
+  monsters = {}
+  for i=1,irnd(2)+2 do
+    local val = irnd(64)
+    local cx,cy = val%8, flr(val/8)    
+    if sget(cx, cy, "levels")==0 
+    and sget(cx, cy-1, "levels")==0 
+    then      
+      table.insert(monsters, {
+        x = cx*8,
+        y = cy*8,
+        curr_anim = {40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63},
+        frame_pos = irnd(24),
+        frame_delay = 5,
+        frame_count = 0,
+      })      
+    end
+  end
 end

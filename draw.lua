@@ -12,6 +12,12 @@ end
 function draw_level()
   -- todo: read pixel data for level
   spritesheet("spritesheet")
+
+  -- draw detail animations
+  for _,m in pairs(monsters) do
+    spr(m.curr_anim[m.frame_pos], m.x, m.y)
+  end
+
   local flicker = game_time < 100 and game_time%25==0
   -- place level tiles, based on pixels  
   for x=0,15 do
@@ -24,16 +30,29 @@ function draw_level()
         if col==COL_START then
           -- draw start
           spr(0, x*8, y*8)
+          -- draw edge?
+          --if sget(x, y+1, "levels")==0 then
+            spr(8, x*8, (y+1)*8)
+          --end
         elseif col==COL_PATH and not flicker then
           -- draw path?
           spr(1, x*8, y*8)
+          -- draw edge?
+          --if sget(x, y+1, "levels")==0 then
+            spr(8, x*8, (y+1)*8)
+          --end
         elseif col==COL_FINISH and not flicker then
           -- draw end
           spr(2, x*8, y*8)
+          -- draw edge?
+          --if sget(x, y+1, "levels")==0 then
+            spr(8, x*8, (y+1)*8)
+          --end
         end
       end
     end
   end
+
   
   -- draw player (current anim cycle)
   aspr(player.curr_anim[player.frame_pos], player.x+4, player.y+4, player.angle)

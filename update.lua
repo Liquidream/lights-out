@@ -48,6 +48,11 @@ function update_player(dt)
 
   -- update player animation
   update_anim(player)
+
+  -- update detail animations
+  for _,m in pairs(monsters) do
+    update_anim(m)
+  end
 end
 
 -- function checkValidDir(dx, dy)
