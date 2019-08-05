@@ -52,32 +52,42 @@ function init_player()
     y = 30,
     angle = 0, --0=right, 0.25=top, 0.5=left, 0.75=down
     --dir = 3, --0=left, 1=right, 2=up, 3=down
-    walk_anim = {16,17,18,19},
+    walk_anim_1 = {16,17},
+    walk_anim_2 = {18,19},
     idle_anim = {18},
     frame_pos = 1,
     frame_delay = 5,
     frame_count = 0,
     moving = false,
-    moveCount = 0
+    moveFrameCount = 0,
+
+    moveCount = 0, -- number of moves player has made
   }
-  player.curr_anim = player.walk_anim
+  player.curr_anim = player.idle_anim
 end
 
 function init_player_move(angle, dx, dy)
   player.angle = angle
   -- calc tween "smoothness"
-  local frames = 22
+  local frames = 12
   local pxDist = 8
   player.dx = (pxDist/frames) * dx
   player.dy = (pxDist/frames) * dy
-  player.moveCount = frames
+  player.moveFrameCount = frames
   player.moving = true
+  -- switch to a "walking" anim
+  init_anim(player, 
+       player.moveCount%2==0 
+        and player.walk_anim_1 or player.walk_anim_2)
+  player.moveCount = player.moveCount + 1
 end
 
 function init_anim(anim_obj, anim)
   anim_obj.curr_anim = anim
-  anim_obj.frame_pos = 1
   anim_obj.frame_count = 0
+  if anim_obj.frame_pos > #anim then
+    anim_obj.frame_pos = 1
+  end
 end
 
 function load_assets()

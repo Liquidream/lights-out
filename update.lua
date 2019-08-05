@@ -10,27 +10,23 @@ function update_player(dt)
   if not player.moving then
     if btnp(0) then         -- left
       init_player_move(0.5, -1, 0)      
-      init_anim(player, player.walk_anim)
     end
     if btnp(1) then         -- right
       init_player_move(0, 1, 0)
-      init_anim(player, player.walk_anim)
     end
     if btnp(2) then         -- up
       init_player_move(0.75, 0, -1)
-      init_anim(player, player.walk_anim)
     end
     if btnp(3) then         -- down
       init_player_move(0.25, 0, 1)
-      init_anim(player, player.walk_anim)
     end
   end
 
-  -- update player move "tweening"
-  if player.moveCount > 0 then
+  -- update player move "tweening" frames
+  if player.moveFrameCount > 0 then
     player.x = player.x + player.dx
     player.y = player.y + player.dy
-    player.moveCount = player.moveCount - 1
+    player.moveFrameCount = player.moveFrameCount - 1
   else
     player.moving = false
     init_anim(player, player.idle_anim)
