@@ -51,9 +51,10 @@ function init_player()
     y = 30,
     angle = 0, --0=right, 0.25=top, 0.5=left, 0.75=down
     --dir = 3, --0=left, 1=right, 2=up, 3=down
+    idle_anim = {18},
     walk_anim_1 = {16,17},
     walk_anim_2 = {18,19},
-    idle_anim = {18},
+    fall_anim = {24,25,26,27,28,29},
     frame_pos = 1,
     frame_delay = 5,
     frame_count = 0,
@@ -83,12 +84,14 @@ function init_player_move(angle, dx, dy)
   player.moveCount = player.moveCount + 1
 end
 
-function init_anim(anim_obj, anim)
+function init_anim(anim_obj, anim, func_on_finish)
   anim_obj.curr_anim = anim
   anim_obj.frame_count = 0
   if anim_obj.frame_pos > #anim then
     anim_obj.frame_pos = 1
   end
+  -- set the function to run on finish (if applicable)
+  anim_obj.func_on_finish = func_on_finish
 end
 
 function load_assets()

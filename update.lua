@@ -74,6 +74,10 @@ function checkTile()
   else
     -- player fell
     log("player fell!")
+    init_anim(player, player.fall_anim, function(self)
+      -- restart level
+      init_game()
+    end)
   end
 
   player.tileHistory[cx..","..cy]=true
@@ -92,8 +96,13 @@ function update_anim(anim_obj)
       anim_obj.frame_count = 0
       -- have we reached the end of anim?
       if anim_obj.frame_pos > #anim_obj.curr_anim then
-        -- loop back to the start
-        anim_obj.frame_pos = 1
+        -- should we run a function?
+        if anim_obj.func_on_finish then
+          anim_obj.func_on_finish(anim_obj)
+        else
+          -- loop back to the start
+          anim_obj.frame_pos = 1
+        end
       end
     end
   end
