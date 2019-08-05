@@ -7,7 +7,8 @@ end
 function update_player(dt)
 
   -- handle player control/movement
-  if not player.moving then
+  if game_time > 100
+   and not player.moving then
     -- left
     if btnp(0) then
       init_player_move(0.5, -1, 0)      
@@ -70,6 +71,7 @@ function checkTile()
   elseif player.tileCol==COL_FINISH then
     -- player reached end
     log("- level complete -")
+    init_anim(player, player.win_anim)
     log("TODO: load next level...")
   else
     -- player fell

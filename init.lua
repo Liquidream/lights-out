@@ -49,12 +49,12 @@ function init_player()
   player = {
     x = 30,
     y = 30,
-    angle = 0, --0=right, 0.25=top, 0.5=left, 0.75=down
-    --dir = 3, --0=left, 1=right, 2=up, 3=down
+    angle = 0.25, --0=right, 0.25=down, 0.5=left, 0.75=top
     idle_anim = {18},
     walk_anim_1 = {16,17},
     walk_anim_2 = {18,19},
     fall_anim = {24,25,26,27,28,29},
+    win_anim = {32,33,34,35},
     frame_pos = 1,
     frame_delay = 5,
     frame_count = 0,

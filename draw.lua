@@ -12,20 +12,22 @@ end
 function draw_level()
   -- todo: read pixel data for level
   spritesheet("spritesheet")
-  -- todo: place level tiles, based on pixels
+  local flicker = game_time < 100 and game_time%25==0
+  -- place level tiles, based on pixels  
   for x=0,15 do
     for y=0,15 do
       local col=sget(x, y, "levels")
       -- handle level data
       if game_time < 100 
-       or player.tileHistory[x..","..y] then
+       or player.tileHistory[x..","..y]        
+       then
         if col==COL_START then
           -- draw start
           spr(0, x*8, y*8)
-        elseif col==COL_PATH then
+        elseif col==COL_PATH and not flicker then
           -- draw path?
           spr(1, x*8, y*8)
-        elseif col==COL_FINISH then
+        elseif col==COL_FINISH and not flicker then
           -- draw end
           spr(2, x*8, y*8)
         end
@@ -37,4 +39,17 @@ function draw_level()
   aspr(player.curr_anim[player.frame_pos], player.x+4, player.y+4, player.angle)
   --spr(19, player.x, player.y)
   
+end
+
+
+
+   
+function fade(i)
+  for c=0,15 do
+      if flr(i+1)>=16 or flr(i+1)<=0 then
+          pal(c,0)
+      else
+          pal(c,fadeBlackTable[c+1][flr(i+1)])
+      end
+  end
 end
