@@ -7,18 +7,44 @@ end
 function update_player(dt)
 
   -- handle player control/movement
-  if btnp(0) then player.x = player.x-8 player.angle=0.5 end
-  if btnp(1) then player.x = player.x+8 player.angle=0 end
-  if btnp(2) then player.y = player.y-8 player.angle=0.75 end
-  if btnp(3) then player.y = player.y+8 player.angle=0.25 end
+  if not player.moving then
+    if btnp(0) then         -- left
+      init_player_move(0.5, -1, 0)      
+      init_anim(player, player.walk_anim)
+    end
+    if btnp(1) then         -- right
+      init_player_move(0, 1, 0)
+      init_anim(player, player.walk_anim)
+    end
+    if btnp(2) then         -- up
+      init_player_move(0.75, 0, -1)
+      init_anim(player, player.walk_anim)
+    end
+    if btnp(3) then         -- down
+      init_player_move(0.25, 0, 1)
+      init_anim(player, player.walk_anim)
+    end
+  end
+
+  -- update player move "tweening"
+  if player.moveCount > 0 then
+    player.x = player.x + player.dx
+    player.y = player.y + player.dy
+    player.moveCount = player.moveCount - 1
+  else
+    player.moving = false
+    init_anim(player, player.idle_anim)
+  end
 
   -- keep player within the screen
+  -- TODO: update this later, when allow "wrapping"
   player.x = mid(0,player.x,56)
   player.y = mid(0,player.y,56)
 
   -- update player animation
   update_anim(player)
 end
+
 
 -- step through (and loop) animations
 function update_anim(anim_obj)

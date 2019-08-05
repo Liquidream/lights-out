@@ -55,10 +55,29 @@ function init_player()
     walk_anim = {16,17,18,19},
     idle_anim = {18},
     frame_pos = 1,
-    frame_delay = 10,
+    frame_delay = 5,
     frame_count = 0,
+    moving = false,
+    moveCount = 0
   }
   player.curr_anim = player.walk_anim
+end
+
+function init_player_move(angle, dx, dy)
+  player.angle = angle
+  -- calc tween "smoothness"
+  local frames = 22
+  local pxDist = 8
+  player.dx = (pxDist/frames) * dx
+  player.dy = (pxDist/frames) * dy
+  player.moveCount = frames
+  player.moving = true
+end
+
+function init_anim(anim_obj, anim)
+  anim_obj.curr_anim = anim
+  anim_obj.frame_pos = 1
+  anim_obj.frame_count = 0
 end
 
 function load_assets()
