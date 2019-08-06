@@ -22,9 +22,10 @@ function draw_level()
   local flicker = game_time < 100 
    and (segment>=18 and segment<=25)
   -- place level tiles, based on pixels  
-  for x=0,15 do
-    for y=0,15 do
-      local col=sget(x, y, "levels")
+  local lvl_offset = (curr_level-1)*8
+  for x=0,7 do
+    for y=0,7 do
+      local col=sget(x+lvl_offset, y, "levels")
       -- handle level data
       if game_time < 100 
        or player.tileHistory[x..","..y]        

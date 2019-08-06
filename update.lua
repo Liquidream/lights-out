@@ -1,14 +1,28 @@
 
 function update_game(dt)
-  update_player(dt)
-  game_time = game_time + 1
+  -- play
+  if gameState == GAME_STATE.LVL_PLAY then
+    update_player(dt)
+    game_time = game_time + 1
+  
+  elseif gameState == GAME_STATE.LVL_END then
+    -- update player animation
+    update_anim(player)
+    state_time = state_time + 1
+    if state_time > 100 then
+      -- init next level
+      curr_level = curr_level + 1
+      init_game()
+    end
+  end
 end
 
 function update_player(dt)
 
   -- handle player control/movement
   if game_time > 100
-   and not player.moving then
+   and not player.moving
+   and not player.fell then
     -- left
     if btnp(0) then
       init_player_move(0.5, -1, 0)      
@@ -61,10 +75,11 @@ end
 
 -- check the tile the player is now on
 function checkTile()
+  local lvl_offset = (curr_level-1)*8
   local cx = player.tx>0 and player.tx or 0
   local cy = player.ty>0 and player.ty or 0
-  player.tileCol = sget(cx,cy,"levels")
-  log("...checkTile ("..cx..","..cy..") = "..player.tileCol)
+  player.tileCol = sget(cx+lvl_offset,cy,"levels")
+  log("...checkTile ("..cx+lvl_offset..","..cy..") = "..player.tileCol)
   log("player pos = "..player.x..","..player.y)
 
   if player.tileCol==COL_START then
@@ -76,11 +91,16 @@ function checkTile()
   elseif player.tileCol==COL_FINISH then
     -- player reached end
     log("- level complete -")
+    player.win_time = game_time
+    gameState = GAME_STATE.LVL_END
+    state_time = 0
+    player.angle = 0.25
     init_anim(player, player.win_anim)
     log("TODO: load next level...")
   else
     -- player fell
     log("player fell!")
+    player.fell = true
     init_anim(player, player.fall_anim, function(self)
       -- restart level
       init_game()

@@ -21,14 +21,19 @@ function init_game()
   init_detail_anims()
   -- reset game time
   game_time = 0
+  state_time = 0
+  -- set state
+  gameState = GAME_STATE.LVL_PLAY 
+  log("init done!!")
 end
 
 function load_level(lvl_num)
+  local lvl_offset = (curr_level-1)*8
   -- todo: read pixel data for level
   spritesheet("levels")
-  for x=0,15 do
-    for y=0,15 do
-      local col=sget(x, y, "levels")
+  for x=0,7 do
+    for y=0,7 do
+      local col=sget(x+lvl_offset, y, "levels")
       -- handle level data
       if col==COL_START then
         -- found start
