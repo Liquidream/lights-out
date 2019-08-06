@@ -1,4 +1,8 @@
+---
 main: main.lua
-title: Lights-Out
+name: Lights Out!
 owner: liquidream
-
+coverImage: cover-image.png
+primaryColor: ffff00
+dimensions: full
+description: Navigate the path to safety, with the... Lights Out!
