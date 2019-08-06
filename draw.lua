@@ -18,7 +18,9 @@ function draw_level()
     spr(m.curr_anim[m.frame_pos], m.x, m.y)
   end
 
-  local flicker = game_time < 100 and game_time%25==0
+  local segment = game_time%25
+  local flicker = game_time < 100 
+   and (segment>=18 and segment<=25)
   -- place level tiles, based on pixels  
   for x=0,15 do
     for y=0,15 do
@@ -34,19 +36,19 @@ function draw_level()
           --if sget(x, y+1, "levels")==0 then
             spr(8, x*8, (y+1)*8)
           --end
-        elseif col==COL_PATH and not flicker then
+        elseif col==COL_PATH then
           -- draw path?
-          spr(1, x*8, y*8)
+          spr(flicker and 4 or 1, x*8, y*8)
           -- draw edge?
           --if sget(x, y+1, "levels")==0 then
-            spr(8, x*8, (y+1)*8)
+            spr(flicker and 11 or 8, x*8, (y+1)*8)
           --end
-        elseif col==COL_FINISH and not flicker then
+        elseif col==COL_FINISH then
           -- draw end
-          spr(2, x*8, y*8)
+          spr(flicker and 5 or 2, x*8, y*8)
           -- draw edge?
           --if sget(x, y+1, "levels")==0 then
-            spr(8, x*8, (y+1)*8)
+            spr(flicker and 11 or 8, x*8, (y+1)*8)
           --end
         end
       end
