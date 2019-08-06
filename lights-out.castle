@@ -1,6 +1,6 @@
 ---
 main: main.lua
-name: Lights Out!
+name: Lights Out! 💡
 owner: liquidream
 coverImage: cover-image.png
 primaryColor: ffff00
