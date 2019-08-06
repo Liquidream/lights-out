@@ -3,6 +3,7 @@ function init_sugarcoat()
   init_sugar("Lights-Out", GAME_WIDTH, GAME_HEIGHT, GAME_SCALE)
   
   use_palette(ak54)
+  load_font ("assets/Particle.ttf", 16, "main-font", true)
   screen_render_stretch(false)
   screen_render_integer_scale(false)
   set_frame_waiting(60)
@@ -80,8 +81,8 @@ function init_player_move(angle, dx, dy)
   player.dy = (pxDist/frames) * dy
   player.moveFrameCount = frames
   player.moving = true
-  player.newX = player.x+(8*dx)
-  player.newY = player.y+(8*dy)
+  player.newX = mid(0, player.x+(8*dx), 56)
+  player.newY = mid(0, player.y+(8*dy), 56)
   -- switch to a "walking" anim
   init_anim(player, 
        player.moveCount%2==0 

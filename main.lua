@@ -24,7 +24,7 @@ require("update")
 require("draw")
 
 
-curr_level = 1
+curr_level = 3
 
 function love.load()
   init_sugarcoat()  

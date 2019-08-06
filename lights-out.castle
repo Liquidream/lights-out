@@ -6,3 +6,4 @@ coverImage: cover-image.png
 primaryColor: ffff00
 dimensions: full
 description: Navigate the path to safety, with the... Lights Out!
+draft: true

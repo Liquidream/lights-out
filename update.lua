@@ -12,7 +12,12 @@ function update_game(dt)
     if state_time > 100 then
       -- init next level
       curr_level = curr_level + 1
-      init_game()
+      if curr_level <= MAX_LEVELS then
+        init_game()
+      else
+        -- completed!
+        gameState = GAME_STATE.COMPLETED
+      end
     end
   end
 end
@@ -96,7 +101,6 @@ function checkTile()
     state_time = 0
     player.angle = 0.25
     init_anim(player, player.win_anim)
-    log("TODO: load next level...")
   else
     -- player fell
     log("player fell!")

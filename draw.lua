@@ -2,8 +2,31 @@
 
 function draw_game()
   cls()
+  -- set default pprint style
+  printp( 0x3330,
+          0x3130,
+          0x3230,
+          0x0 )
+  printp_color(0, 0, 0)
 
-  draw_level()
+  if gameState == GAME_STATE.SPLASH then
+    -- todo: splash screen
+
+  elseif gameState == GAME_STATE.TITLE then
+    -- todo: title screen
+    
+  elseif gameState == GAME_STATE.COMPLETED then
+    -- draw congrats!
+    pprintc("TODO:", 10, 47)    
+    pprintc("ADD MORE LVLS", 20, 47)    
+    pprintc("PLS COME BACK!", 40, 47)
+    -- pprintc("CONGRATULATIONS", 10, 47)
+    -- pprintc("YOU COMPLETED", 30, 47)
+    -- pprintc("THE GAME!", 40, 47)
+  else
+    -- normal play (level intro/outro/game-over)
+    draw_level()
+  end
 
   
   --circfill(x, y, 4 + 2 * cos(t()), 3)
@@ -59,11 +82,18 @@ function draw_level()
   
   -- draw player (current anim cycle)
   aspr(player.curr_anim[player.frame_pos], player.x+4, player.y+4, player.angle)
-  --spr(19, player.x, player.y)
   
+  -- Draw UI
+  if game_time < 100 then
+    pprintc("LEVEL "..curr_level, 1, 47)
+  end
 end
 
-
+-- pprint, centered
+function pprintc(text, y, col)
+    local letterWidth = 4
+    pprint(text, GAME_WIDTH/2-(#text*letterWidth)/2, y, col)
+end
 
    
 function fade(i)
