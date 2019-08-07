@@ -25,7 +25,7 @@ end
 function update_player(dt)
 
   -- handle player control/movement
-  if game_time > 100
+  if game_time > 175
    and not player.moving
    and not player.fell then
     -- left
