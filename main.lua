@@ -14,6 +14,10 @@
       - Fastest complete of ALL levels
   • 
 
+## ACKNOWLEDGEMENTS
+ • @somepx for Particle font
+   (https://www.patreon.com/posts/three-tiny-fonts-24214421)
+
 ]]
 
 require("sugarcoat/sugarcoat")
@@ -24,7 +28,7 @@ require("update")
 require("draw")
 
 
-curr_level = 1
+curr_level = 11
 
 function love.load()
   init_sugarcoat()  

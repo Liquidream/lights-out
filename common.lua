@@ -10,7 +10,7 @@ GAME_STATE = { SPLASH=0, TITLE=1, INFO=2, LVL_INTRO=3, LVL_PLAY=4, LVL_END=5, LO
 COL_START = 38
 COL_PATH = 45
 COL_FINISH = 8
-MAX_LEVELS = 10
+MAX_LEVELS = 12
 
 -- Andrew Kensler (+another black!)
 -- https://lospec.com/palette-list/andrew-kensler-54

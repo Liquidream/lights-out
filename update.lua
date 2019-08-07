@@ -62,8 +62,8 @@ function update_player(dt)
 
   -- keep player within the screen
   -- TODO: update this later, when allow "wrapping"
-  player.x = mid(0,player.x,56)
-  player.y = mid(0,player.y,56)
+  -- player.x = mid(0,player.x,56)
+  -- player.y = mid(0,player.y,56)
 
   -- update player animation
   update_anim(player)
@@ -80,6 +80,7 @@ end
 
 -- check the tile the player is now on
 function checkTile()
+  
   local lvl_offset = (curr_level-1)*8
   local cx = player.tx>0 and player.tx or 0
   local cy = player.ty>0 and player.ty or 0
@@ -112,6 +113,8 @@ function checkTile()
   end
 
   player.tileHistory[cx..","..cy]=true
+  player.newX = nil
+  player.newY = nil
 end
 
 -- step through (and loop) animations
