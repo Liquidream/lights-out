@@ -82,21 +82,17 @@ function draw_level()
   -- draw player (current anim cycle)
   aspr(player.curr_anim[player.frame_pos], player.x+4, player.y+4, player.angle)
 
-  -- draw "wrap" movement
-  if player.newX or player.newY then
-    local diffX = player.x-player.newX
-    local diffY = player.y-player.newY
-    local wrapX = player.newX and abs(diffX)>16 or false
-    local wrapY = player.newY and abs(diffY)>16 or false
-    if wrapX or wrapY then
-      local offX = wrapX and (diffX<0 and 63 or -7) or player.newX
-      local offY = wrapY and (diffY<0 and 63 or -7) or player.newY
-      log("draw wrap!! "..offX..","..offY)
-      aspr(player.curr_anim[player.frame_pos], 
-        offX-(player.lastX-player.x)+4, 
-        offY-(player.lastY-player.y)+4, 
-        player.angle)
-    end
+  -- draw "wrap" movement?
+  -- (draw a second player sprite so we see the wrap)
+  if player.wrapX or player.wrapY then
+    local offX = player.wrapX and (player.wrapX>0 and 63 or -7) or player.newX
+    local offY = player.wrapY and (player.wrapY>0 and 63 or -7) or player.newY
+    log("draw wrap!! "..offX..","..offY)
+    aspr(player.curr_anim[player.frame_pos], 
+      offX-(player.lastX-player.x)+4, 
+      offY-(player.lastY-player.y)+4, 
+      player.angle)
+  
   end
 
   -- Draw UI

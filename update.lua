@@ -115,6 +115,8 @@ function checkTile()
   player.tileHistory[cx..","..cy]=true
   player.newX = nil
   player.newY = nil
+  player.wrapX = nil
+  player.wrapY = nil
 end
 
 -- step through (and loop) animations

@@ -89,11 +89,11 @@ function init_player_move(angle, dx, dy)
   player.newY = player.y+(8*dy)
 
   -- check for "wrap" screen movement
-  if player.newX < 0 then player.newX = 56 end
-  if player.newY < 0 then player.newY = 56 end
-  if player.newX > 56 then player.newX = 0 end
-  if player.newY > 56 then player.newY = 0 end
-
+  if player.newX < 0 then player.wrapX=1 player.newX = 56 end
+  if player.newY < 0 then player.wrapY=1 player.newY = 56 end
+  if player.newX > 56 then player.wrapX=-1 player.newX = 0 end
+  if player.newY > 56 then player.wrapY=-1 player.newY = 0 end
+  
   -- switch to a "walking" anim
   init_anim(player, 
        player.moveCount%2==0 
