@@ -8,11 +8,14 @@
   •
 
 ## IDEAS
-  • Have advanced levels with DOORS (wrap level, like "Pac Man")
+  • Have a light switch tile (shows level again for a few secs, once!)
+
   • Have a global high score for 
-      - Each level, and 
-      - Fastest complete of ALL levels
-  • 
+    - Each level, and 
+    - Fastest complete of ALL levels
+
+## DONE
+  • Have advanced levels with DOORS (wrap level, like "Pac Man")
 
 ## ACKNOWLEDGEMENTS
  • @somepx for Particle font

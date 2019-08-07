@@ -88,13 +88,23 @@ function checkTile()
   log("...checkTile ("..cx+lvl_offset..","..cy..") = "..player.tileCol)
   log("player pos = "..player.x..","..player.y)
 
-  if player.tileCol==COL_START then
+  if player.tileCol == COL_START then
     -- player on start
     -- do nothing
-  elseif player.tileCol==COL_PATH then
+  elseif player.tileCol == COL_PATH then
     -- player found path (valid movement)
     log("valid move")
-  elseif player.tileCol==COL_FINISH then
+
+  elseif player.tileCol == COL_LIGHT then
+    -- light up (if not already used)
+    if not player.tileHistory[cx..","..cy] then
+      log("temp light on")
+      light_start = love.timer.getTime()
+    else
+      log("temp light already used!")      
+    end
+
+  elseif player.tileCol == COL_FINISH then
     -- player reached end
     log("- level complete -")
     player.win_time = game_time

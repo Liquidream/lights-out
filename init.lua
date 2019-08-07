@@ -24,7 +24,8 @@ function init_game()
   game_time = 0
   state_time = 0
   -- set state
-  gameState = GAME_STATE.LVL_PLAY 
+  gameState = GAME_STATE.LVL_PLAY   
+  light_start = love.timer.getTime()
   log("init done!!")
 end
 

@@ -40,40 +40,45 @@ function draw_level()
   for _,m in pairs(monsters) do
     spr(m.curr_anim[m.frame_pos], m.x, m.y)
   end
-
-  local segment = game_time%25
-  local flicker = game_time < 100 
-   and (segment>=18 and segment<=25)
+  
+  local lightTime = love.timer.getTime()-light_start
+  local segment = lightTime%1
+  --log(segment)
+  local flicker = lightTime < MAX_LIGHT_DURATION
+   and (segment>=.8 and segment<=1)
+   --and player.tileCol ~= 47
   -- place level tiles, based on pixels  
   local lvl_offset = (curr_level-1)*8
   for x=0,7 do
     for y=0,7 do
       local col=sget(x+lvl_offset, y, "levels")
       -- handle level data
-      if game_time < 100 
+      if lightTime < MAX_LIGHT_DURATION
        or player.tileHistory[x..","..y]        
        then
         if col==COL_START then
           -- draw start
           spr(0, x*8, y*8)
           -- draw edge?
-          --if sget(x, y+1, "levels")==0 then
-            spr(8, x*8, (y+1)*8)
-          --end
+          spr(8, x*8, (y+1)*8)
+
         elseif col==COL_PATH then
           -- draw path?
           spr(flicker and 4 or 1, x*8, y*8)
           -- draw edge?
-          --if sget(x, y+1, "levels")==0 then
-            spr(flicker and 11 or 8, x*8, (y+1)*8)
-          --end
+          spr(flicker and 11 or 8, x*8, (y+1)*8)
+
+        elseif col==COL_LIGHT then
+          -- draw end
+          spr(flicker and 7 or 6, x*8, y*8)
+          -- draw edge?
+          spr(flicker and 11 or 8, x*8, (y+1)*8)        
+
         elseif col==COL_FINISH then
           -- draw end
           spr(flicker and 5 or 2, x*8, y*8)
           -- draw edge?
-          --if sget(x, y+1, "levels")==0 then
-            spr(flicker and 11 or 8, x*8, (y+1)*8)
-          --end
+          spr(flicker and 11 or 8, x*8, (y+1)*8)
         end
       end
     end
