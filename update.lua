@@ -91,7 +91,8 @@ function checkTile()
   if player.tileCol == COL_START then
     -- player on start
     -- do nothing
-  elseif player.tileCol == COL_PATH then
+  elseif player.tileCol == COL_PATH 
+   or player.tileCol==COL_WRAP then
     -- player found path (valid movement)
     log("valid move")
 

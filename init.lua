@@ -75,15 +75,7 @@ end
 
 function init_player_move(angle, dx, dy)
   player.angle = angle
-  -- calc tween "smoothness"
-  local frames = 12
-  local pxDist = 8
-  player.dx = (pxDist/frames) * dx
-  player.dy = (pxDist/frames) * dy
-  player.moveFrameCount = frames
-  player.lastX = player.x
-  player.lastY = player.y
-  player.moving = true
+ 
   
   -- assume normal move (within screen bounds?)
   player.newX = player.x+(8*dx)
@@ -94,6 +86,28 @@ function init_player_move(angle, dx, dy)
   if player.newY < 0 then player.wrapY=1 player.newY = 56 end
   if player.newX > 56 then player.wrapX=-1 player.newX = 0 end
   if player.newY > 56 then player.wrapY=-1 player.newY = 0 end
+
+  -- check to see if player on a "wrap" tile
+  -- (if not, then undo the move)
+  if (player.wrapX or player.wrapY)
+   and player.tileCol ~= COL_WRAP then
+    player.newX = player.x
+    player.newY = player.y
+    player.wrapX = nil
+    player.wrapY = nil
+    -- abort now
+    return
+  end
+
+   -- calc tween "smoothness"
+   local frames = 12
+   local pxDist = 8
+   player.dx = (pxDist/frames) * dx
+   player.dy = (pxDist/frames) * dy
+   player.moveFrameCount = frames
+   player.lastX = player.x
+   player.lastY = player.y
+   player.moving = true
   
   -- switch to a "walking" anim
   init_anim(player, 

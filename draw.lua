@@ -74,7 +74,7 @@ function draw_level()
           -- draw edge?
           spr(8, x*8, (y+1)*8)
 
-        elseif col==COL_PATH then
+        elseif col==COL_PATH or col==COL_WRAP then
           -- draw path?
           spr((flicker or dim) and 4 or 1, x*8, y*8)
           -- draw edge?
