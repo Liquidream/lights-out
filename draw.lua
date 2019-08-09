@@ -56,6 +56,18 @@ function draw_level()
       if lightTime < MAX_LIGHT_DURATION
        or player.tileHistory[x..","..y]        
        then
+        -- is tile still "lighting up"?
+        local dim = false
+        if player.tileHistory[x..","..y]
+         and player.tileHistory[x..","..y]<1 
+        then
+          player.tileHistory[x..","..y] 
+            = min(player.tileHistory[x..","..y]+0.1, 1)
+            -- only dim if lights aren't "on"
+            if lightTime > MAX_LIGHT_DURATION then
+            dim = true
+          end
+        end
         if col==COL_START then
           -- draw start
           spr(0, x*8, y*8)
@@ -64,21 +76,21 @@ function draw_level()
 
         elseif col==COL_PATH then
           -- draw path?
-          spr(flicker and 4 or 1, x*8, y*8)
+          spr((flicker or dim) and 4 or 1, x*8, y*8)
           -- draw edge?
-          spr(flicker and 11 or 8, x*8, (y+1)*8)
+          spr((flicker or dim) and 11 or 8, x*8, (y+1)*8)
 
         elseif col==COL_LIGHT then
           -- draw end
-          spr(flicker and 7 or 6, x*8, y*8)
+          spr((flicker or dim) and 7 or 6, x*8, y*8)
           -- draw edge?
-          spr(flicker and 11 or 8, x*8, (y+1)*8)        
+          spr((flicker or dim) and 11 or 8, x*8, (y+1)*8)        
 
         elseif col==COL_FINISH then
           -- draw end
-          spr(flicker and 5 or 2, x*8, y*8)
+          spr((flicker or dim) and 5 or 2, x*8, y*8)
           -- draw edge?
-          spr(flicker and 11 or 8, x*8, (y+1)*8)
+          spr((flicker or dim) and 11 or 8, x*8, (y+1)*8)
         end
       end
     end

@@ -25,7 +25,7 @@ end
 function update_player(dt)
 
   -- handle player control/movement
-  if game_time > 175
+  if (love.timer.getTime()-light_start) > MAX_LIGHT_DURATION
    and not player.moving
    and not player.fell then
     -- left
@@ -122,7 +122,7 @@ function checkTile()
     end)
   end
 
-  player.tileHistory[cx..","..cy]=true
+  player.tileHistory[cx..","..cy]=0.5
   player.newX = nil
   player.newY = nil
   player.wrapX = nil
