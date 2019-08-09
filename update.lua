@@ -123,7 +123,10 @@ function checkTile()
     end)
   end
 
-  player.tileHistory[cx..","..cy]=0.5
+  -- only fade tile if first visit
+  if not player.tileHistory[cx..","..cy] then
+    player.tileHistory[cx..","..cy]=0.5
+  end
   player.newX = nil
   player.newY = nil
   player.wrapX = nil
