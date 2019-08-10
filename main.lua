@@ -4,17 +4,17 @@
 -- (for #LOWREZJAM 2019)
 
 ## TODO's
-  • 
-  •
+- • Instructions
+- • Global high-score
+- • Credits (Jason, @somepx, Patreon supporters)
 
 ## IDEAS
-  • Have a light switch tile (shows level again for a few secs, once!)
-
-  • Have a global high score for 
-    - Each level, and 
-    - Fastest complete of ALL levels
+  • Have a global high score table for 
+    - Times+deaths to complete of ALL levels
+    - Use Castle's UI to show it!
 
 ## DONE
+  • Have a light switch tile (shows level again for a few secs, once!)
   • Have advanced levels with DOORS (wrap level, like "Pac Man")
 
 ## ACKNOWLEDGEMENTS
@@ -29,6 +29,7 @@ require("common")
 require("init")
 require("update")
 require("draw")
+require("ui_input")
 
 
 curr_level = 1
@@ -37,7 +38,7 @@ function love.load()
   init_sugarcoat()  
   load_assets()
   init_input()
-  init_game()
+  init_level()
 end
 
 function love.update(dt)

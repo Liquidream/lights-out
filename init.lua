@@ -16,7 +16,7 @@ function init_input()
   register_btn(3, 0, input_id("keyboard", "down"))
 end
 
-function init_game()
+function init_level()
   init_player()
   load_level(curr_level)
   init_detail_anims()

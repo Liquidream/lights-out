@@ -13,7 +13,7 @@ function update_game(dt)
       -- init next level
       curr_level = curr_level + 1
       if curr_level <= MAX_LEVELS then
-        init_game()
+        init_level()
       else
         -- completed!
         gameState = GAME_STATE.COMPLETED
@@ -119,7 +119,7 @@ function checkTile()
     player.fell = true
     init_anim(player, player.fall_anim, function(self)
       -- restart level
-      init_game()
+      init_level()
     end)
   end
 
