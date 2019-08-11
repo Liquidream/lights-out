@@ -37,17 +37,20 @@ end
 
 -- Save all "User" values to Castle 
 -- (helpful if been using the storage table directly to update values)
-storage.saveUserValues = function()
+storage.saveUserValues = function(func_callback)
   log("saveUserValues()...")
-  for key,value in pairs(storage) do
-    -- skip functions
-    if type(value) ~= "function" then
-      network.async(function()
+  network.async(function()
+    for key,value in pairs(storage) do
+      -- skip functions
+      if type(value) ~= "function" then
         castle.storage.set(key, value)
-      end)
-      --storage.setUserValue(key, setting)
+      end
     end
-  end
+    -- run callback?
+    if func_callback then
+      func_callback()
+    end
+  end)
 end
 
 -- --------------------------------------------------------

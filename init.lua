@@ -16,8 +16,10 @@ function init_data()
     -- Now init level (either 1 or saved progress)
     init_level()
   end)
-  -- Time taken this run
+  -- Time taken since last reset/win
   storage.getUserValue("currTime", 0)
+  -- Total no. of lives lost since last reset/win  
+  storage.getUserValue("currDeaths", 0)
   -- Get Global saved data
   storage.getGlobalValue("worldHighScore", {})
 end

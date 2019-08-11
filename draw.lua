@@ -6,8 +6,9 @@ function draw_game()
   printp( 0x3330,
           0x3130,
           0x3230,
-          0x0 )
-  printp_color(0, 0, 0)
+          0x0 
+        )
+  printp_color(0, 0, 0, 0)
 
   if gameState == GAME_STATE.SPLASH then
     -- todo: splash screen
@@ -38,7 +39,7 @@ function draw_level()
 
   -- still loading?
   if not levelReady then
-    pprintc("LOADING...", 20, 47)
+    pprintc("LOADING...", 20, 47,29)
     -- abort now!
     return
   end
@@ -119,16 +120,19 @@ function draw_level()
   
   end
 
-  -- Draw UI
+  -- Draw UI  
   if game_time < 100 then
     pprintc("LEVEL "..storage.currLevel, 1, 47)
   end
+
+  -- pprintc("TIME "..flr(storage.currTime),40, 47)  
+  -- pprintc("DEATHS "..flr(storage.currDeaths),50, 47)  
 end
 
 -- pprint, centered
-function pprintc(text, y, col)
+function pprintc(text, y, col1, col2, col3)
     local letterWidth = 4
-    pprint(text, GAME_WIDTH/2-(#text*letterWidth)/2, y, col)
+    pprint(text, GAME_WIDTH/2-(#text*letterWidth)/2, y, col1,col2,col3)
 end
 
    

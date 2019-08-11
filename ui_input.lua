@@ -76,7 +76,14 @@ _**WARNING**: Clicking this will lose your saved progress!_
 ]])
     if ui.button("Reset", { kind='danger'}) then
       -- reset progress
-      log("TODO: reset player progress..")
+      log("resetting player progress..")
+      levelReady = false
+      storage.currLevel = 1
+      storage.currTime = 0
+      storage.currDeaths = 0
+      storage.saveUserValues(function()
+        init_data()
+      end)
     end
 
   end)

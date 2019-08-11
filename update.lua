@@ -27,28 +27,33 @@ function update_game(dt)
     state_time = state_time + 1
     if state_time > 100 then
       levelUp()
+      saveProgress()
     end
   end
 end
 
-function levelUp()
-  -- Update total player time
-  log("currTime b4 = "..storage.currTime)
-  storage.currTime = storage.currTime + 
-    love.timer.getTime() - (sessionStartTime - (lastSaveTime or 0))
-  log("currTime after = "..storage.currTime)
+function levelUp()  
   -- init next level
   storage.currLevel = storage.currLevel + 1  
-  if storage.currLevel <= MAX_LEVELS then    
-    -- save progress
-    storage.saveUserValues()
-    lastSaveTime = love.timer.getTime()
+  if storage.currLevel <= MAX_LEVELS then        
     -- start next level
     init_level()
   else
     -- completed!
     gameState = GAME_STATE.COMPLETED
   end
+end
+
+
+-- save player's progress
+-- (time taken, lives lost)
+function saveProgress()
+  -- Update total player time
+  storage.currTime = storage.currTime + 
+   love.timer.getTime() - (lastSaveTime or sessionStartTime)   
+  -- save progress
+  storage.saveUserValues()
+  lastSaveTime = love.timer.getTime()  
 end
 
 function update_player(dt)
@@ -145,6 +150,8 @@ function checkTile()
   else
     -- player fell
     log("player fell!")
+    storage.currDeaths = storage.currDeaths + 1
+    saveProgress()
     player.fell = true
     init_anim(player, player.fall_anim, function(self)
       -- restart level
