@@ -21,6 +21,17 @@ Navigate the path to safety, with the...
 
   end)
 
+  ui.section("High Score (WIP)", function()
+
+    ui.markdown([[
+| Name          | Time (💀's) |
+| ------------- |:------------:|
+| Liquidream     | 10m 30s (12💀) |
+| Another    | 10m 30s (32💀)      |
+| N.E.One    | 30m 1s (92💀)      |
+]])
+  end)
+
   ui.section("Credits", function()
 
     ui.markdown([[

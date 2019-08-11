@@ -56,6 +56,14 @@ function saveProgress()
   lastSaveTime = love.timer.getTime()  
 end
 
+-- submit player's time/deaths
+function submitHighScore()
+
+  -- todo: this!!
+
+end
+
+
 function update_player(dt)
 
   -- handle player control/movement
