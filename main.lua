@@ -34,11 +34,12 @@ require("ui_input")
 
 
 function love.load()
+  init_data()
   init_sugarcoat()  
   load_assets()
-  init_data()
   init_input()
-  init_level()
+
+  --init_level() -- Don't do this until receive data from Castle
 end
 
 function love.update(dt)

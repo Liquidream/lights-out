@@ -65,6 +65,11 @@ storage = require("storage")
 sessionStartTime = love.timer.getTime()
 -- time progress was last "saved"
 lastSaveTime = nil
+
+
+-- Other state global vars
+levelReady = nil
+
 --
 -- Helper Functions
 --

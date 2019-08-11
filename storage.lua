@@ -10,7 +10,7 @@ local storage = {}
 
 -- Get "User" storage value for given key
 -- (or use the default value specified)
-storage.getUserValue = function(key,default)
+storage.getUserValue = function(key,default,func_callback)
   local retValue = nil
   -- set the default while we wait for response
   storage[key] = default
@@ -20,6 +20,10 @@ storage.getUserValue = function(key,default)
     log("getUserValue["..key.."]:"..(retValue or "<nil>"))
     -- store the final setting (or default if none found)
     storage[key] = retValue or default
+    -- run callback?
+    if func_callback then
+      func_callback()
+    end
   end)
 end
 

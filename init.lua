@@ -11,8 +11,13 @@ end
 
 function init_data()
   -- Get User saved data
-  storage.getUserValue("currLevel", 1)  -- Last level reached
-  storage.getUserValue("currTime", 0)   -- Time taken this run
+  -- Last level reached
+  storage.getUserValue("currLevel", 1, function()
+    -- Now init level (either 1 or saved progress)
+    init_level()
+  end)
+  -- Time taken this run
+  storage.getUserValue("currTime", 0)
   -- Get Global saved data
   storage.getGlobalValue("worldHighScore", {})
 end
@@ -34,6 +39,7 @@ function init_level()
   -- set state
   gameState = GAME_STATE.LVL_PLAY   
   light_start = love.timer.getTime()
+  levelReady = true
   log("init done!!")
 end
 

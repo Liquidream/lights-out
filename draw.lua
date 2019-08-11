@@ -24,7 +24,7 @@ function draw_game()
     -- pprintc("YOU COMPLETED", 30, 47)
     -- pprintc("THE GAME!", 40, 47)
   else
-    -- normal play (level intro/outro/game-over)
+    -- normal play (level intro/outro/game-over)    
     draw_level()
   end
 
@@ -36,7 +36,14 @@ function draw_level()
   -- todo: read pixel data for level
   spritesheet("spritesheet")
 
-  -- draw detail animations
+  -- still loading?
+  if not levelReady then
+    pprintc("LOADING...", 20, 47)
+    -- abort now!
+    return
+  end
+
+  -- draw detail animations  
   for _,m in pairs(monsters) do
     spr(m.curr_anim[m.frame_pos], m.x, m.y)
   end
