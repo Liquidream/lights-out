@@ -32,11 +32,11 @@ require("draw")
 require("ui_input")
 
 
-curr_level = 1
 
 function love.load()
   init_sugarcoat()  
   load_assets()
+  init_data()
   init_input()
   init_level()
 end

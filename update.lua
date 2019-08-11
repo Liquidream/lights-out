@@ -1,5 +1,21 @@
 
+--tweetCounter=0
+
 function update_game(dt)
+
+  -- temp tweet code
+  -- tweetCounter = tweetCounter + 1
+  -- if tweetCounter>25 then
+  --   tweetCounter=0
+  --   curr_level = curr_level + 1
+  --   if curr_level <= MAX_LEVELS then
+  --     init_level()
+  --   else
+  --     -- completed!
+  --     gameState = GAME_STATE.COMPLETED
+  --   end
+  -- end
+
   -- play
   if gameState == GAME_STATE.LVL_PLAY then
     update_player(dt)
@@ -10,15 +26,28 @@ function update_game(dt)
     update_anim(player)
     state_time = state_time + 1
     if state_time > 100 then
-      -- init next level
-      curr_level = curr_level + 1
-      if curr_level <= MAX_LEVELS then
-        init_level()
-      else
-        -- completed!
-        gameState = GAME_STATE.COMPLETED
-      end
+      levelUp()
     end
+  end
+end
+
+function levelUp()
+  -- Update total player time
+  log("currTime b4 = "..storage.currTime)
+  storage.currTime = storage.currTime + 
+    love.timer.getTime() - (sessionStartTime - (lastSaveTime or 0))
+  log("currTime after = "..storage.currTime)
+  -- init next level
+  storage.currLevel = storage.currLevel + 1  
+  if storage.currLevel <= MAX_LEVELS then    
+    -- save progress
+    storage.saveUserValues()
+    lastSaveTime = love.timer.getTime()
+    -- start next level
+    init_level()
+  else
+    -- completed!
+    gameState = GAME_STATE.COMPLETED
   end
 end
 
@@ -81,7 +110,7 @@ end
 -- check the tile the player is now on
 function checkTile()
   
-  local lvl_offset = (curr_level-1)*8
+  local lvl_offset = (storage.currLevel-1)*8
   local cx = player.tx>0 and player.tx or 0
   local cy = player.ty>0 and player.ty or 0
   player.tileCol = sget(cx+lvl_offset,cy,"levels")

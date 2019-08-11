@@ -57,11 +57,14 @@ fadeBlackTable={
 }
 
 --
--- Globals
+-- Globals (saved values)
 --
-curr_level = 1
-
-
+-- storage is used for all Castle-saved data
+storage = require("storage")
+-- time game was opened
+sessionStartTime = love.timer.getTime()
+-- time progress was last "saved"
+lastSaveTime = nil
 --
 -- Helper Functions
 --

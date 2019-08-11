@@ -9,6 +9,14 @@ function init_sugarcoat()
   set_frame_waiting(60)
 end
 
+function init_data()
+  -- Get User saved data
+  storage.getUserValue("currLevel", 1)  -- Last level reached
+  storage.getUserValue("currTime", 0)   -- Time taken this run
+  -- Get Global saved data
+  storage.getGlobalValue("worldHighScore", {})
+end
+
 function init_input()
   register_btn(0, 0, input_id("keyboard", "left"))
   register_btn(1, 0, input_id("keyboard", "right"))
@@ -18,7 +26,7 @@ end
 
 function init_level()
   init_player()
-  load_level(curr_level)
+  load_level(storage.currLevel)
   init_detail_anims()
   -- reset game time
   game_time = 0
@@ -30,7 +38,7 @@ function init_level()
 end
 
 function load_level(lvl_num)
-  local lvl_offset = (curr_level-1)*8
+  local lvl_offset = (storage.currLevel-1)*8
   -- todo: read pixel data for level
   spritesheet("levels")
   for x=0,7 do

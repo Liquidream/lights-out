@@ -48,7 +48,7 @@ function draw_level()
    and (segment>=.8 and segment<=1)
    --and player.tileCol ~= 47
   -- place level tiles, based on pixels  
-  local lvl_offset = (curr_level-1)*8
+  local lvl_offset = (storage.currLevel-1)*8
   for x=0,7 do
     for y=0,7 do
       local col=sget(x+lvl_offset, y, "levels")
@@ -114,7 +114,7 @@ function draw_level()
 
   -- Draw UI
   if game_time < 100 then
-    pprintc("LEVEL "..curr_level, 1, 47)
+    pprintc("LEVEL "..storage.currLevel, 1, 47)
   end
 end
 
