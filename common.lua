@@ -65,7 +65,8 @@ storage = require("storage")
 sessionStartTime = love.timer.getTime()
 -- time progress was last "saved"
 lastSaveTime = nil
-
+-- global high score table
+globalHighScores = nil
 
 -- Other state global vars
 levelReady = nil
@@ -82,4 +83,16 @@ function resetRNG()
     _incSeed = _incSeed + 1
     local seed=os.time() + _incSeed
     math.randomseed(seed)
+end
+
+function formatTime(timeInSecs)
+  local s = timeInSecs * 1000
+  local ms = s % 1000
+  s = (s - ms) / 1000
+  local secs = s % 60
+  s = (s - secs) / 60
+  local mins = s % 60
+  local strTime = mins..":"..(secs<10 and "0" or "")..secs
+  --log("formatTime() = "..strTime)
+  return strTime
 end

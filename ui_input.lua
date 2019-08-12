@@ -21,15 +21,26 @@ Navigate the path to safety, with the...
 
   end)
 
-  ui.section("High Score (WIP)", function()
+  ui.section("Global High Score", function()
+    local scoreTable = [[
+| Name          | Time(#💀) |
+| ------------- |:------------:|]]
 
-    ui.markdown([[
-| Name          | Time (💀's) |
-| ------------- |:------------:|
-| Liquidream     | 10m 30s (12💀) |
-| Another    | 10m 30s (32💀)      |
-| N.E.One    | 30m 1s (92💀)      |
-]])
+    if globalHighScores then
+      for key,score in pairs(globalHighScores) do
+        scoreTable = scoreTable.."\n"
+         ..score.name.." | "..formatTime(score.time).." ("..score.deaths..") |"
+      end
+    end
+    -- write final table    
+    ui.markdown(scoreTable)
+--     ui.markdown([[
+-- | Name          | Time (💀's) |
+-- | ------------- |:------------:|
+-- | Liquidream     | 10m 30s (12💀) |
+-- | Another    | 10m 30s (32💀)      |
+-- | N.E.One    | 30m 1s (92💀)      |
+-- ]])
   end)
 
   ui.section("Credits", function()
@@ -95,6 +106,12 @@ _**WARNING**: Clicking this will lose your saved progress!_
       storage.saveUserValues(function()
         init_data()
       end)
+
+      -- ####################################
+      -- ...also wipe GLOBAL data!
+      -- ####################################
+      --storage.setGlobalValue("globalHighScores",{})
+      -- ####################################
     end
 
   end)

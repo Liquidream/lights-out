@@ -26,8 +26,8 @@ function update_game(dt)
     update_anim(player)
     state_time = state_time + 1
     if state_time > 100 then
-      levelUp()
       saveProgress()
+      levelUp()      
     end
   end
 end
@@ -41,7 +41,12 @@ function levelUp()
   else
     -- completed!
     gameState = GAME_STATE.COMPLETED
+    -- Submit player's score (if better than prev)
+    submitHighScore()
   end
+  -- Refresh Global saved data
+  -- (do it periodically, so scores up-to-date)
+  refreshGlobalHighScores()
 end
 
 
@@ -58,9 +63,28 @@ end
 
 -- submit player's time/deaths
 function submitHighScore()
-
-  -- todo: this!!
-
+  -- look for previous time
+  local prevScore = globalHighScores[my_id]
+  log("prevScore = "..tostring(prevScore))
+  if not prevScore 
+   or storage.currTime+storage.currDeaths < 
+    (prevScore.time+(prevScore.deaths*10)) 
+  then
+    log("currScore.time+deaths = "..storage.currTime+storage.currDeaths)
+    if prevScore then
+      log("prevScore.time+deaths = "..(prevScore.time+(prevScore.deaths*10)))
+    end
+    -- Submit THIS score
+    local newScore = {
+      time = storage.currTime,
+      deaths = storage.currDeaths,
+      name = my_name
+    }
+    -- add/replace player's score
+    globalHighScores[my_id] = newScore
+    -- save global changes
+    storage.setGlobalValue("globalHighScores",globalHighScores)
+  end
 end
 
 

@@ -11,13 +11,12 @@ local storage = {}
 -- Get "User" storage value for given key
 -- (or use the default value specified)
 storage.getUserValue = function(key,default,func_callback)
-  local retValue = nil
   -- set the default while we wait for response
   storage[key] = default
 
   network.async(function()
     local retValue = castle.storage.get(key)
-    log("getUserValue["..key.."]:"..(retValue or "<nil>"))
+    log("getUserValue["..key.."]:"..tostring(retValue))
     -- store the final setting (or default if none found)
     storage[key] = retValue or default
     -- run callback?
@@ -28,10 +27,14 @@ storage.getUserValue = function(key,default,func_callback)
 end
 
 -- Set "User" storage value (if null passed - key will be deleted)
-storage.setUserValue = function(key,value)
-  log("setUserValue["..key.."]:"..(value or "<nil>"))
+storage.setUserValue = function(key,value,func_callback)
+  log("setUserValue["..key.."]:"..tostring(value))
     network.async(function()
       castle.storage.set(key, value)
+      -- run callback?
+      if func_callback then
+        func_callback()
+      end
     end)
 end
 
@@ -59,22 +62,25 @@ end
 
 -- Get "Global" storage value for given key
 -- (or use the default value specified)
-storage.getGlobalValue = function(key,default)
-  local retValue = nil
+storage.getGlobalValue = function(key,default,func_callback)  
   -- set the default while we wait for response
   storage[key] = default
 
   network.async(function()
-    local retValue = castle.storage.getGlobal(key)
-    log("getGlobalValue["..key.."]:"..(retValue or "<nil>"))
+    local retValue = castle.storage.getGlobal(key) or default
+    log("getGlobalValue["..key.."]:"..tostring(retValue))
     -- store the final setting (or default if none found)
-    storage[key] = retValue or default
+    storage[key] = retValue
+    -- run callback?
+    if func_callback then
+      func_callback(retValue)
+    end
   end)
 end
 
 -- Set "Global" storage value (if null passed - key will be deleted)
 storage.setGlobalValue = function(key,value)
-  log("setGlobalValue["..key.."]:"..(value or "<nil>"))
+  log("setGlobalValue["..key.."]:"..tostring(value))
   network.async(function()
     castle.storage.setGlobal(key, value)
   end)

@@ -10,7 +10,13 @@ function init_sugarcoat()
 end
 
 function init_data()
-  -- Get User saved data
+  -- Get User info
+  network.async(function()
+    user = castle.user.getMe()
+    my_id = user.userId
+    my_name = user.username
+  end)
+  -- Get saved data...
   -- Last level reached
   storage.getUserValue("currLevel", 1, function()
     -- Now init level (either 1 or saved progress)
@@ -21,7 +27,18 @@ function init_data()
   -- Total no. of lives lost since last reset/win  
   storage.getUserValue("currDeaths", 0)
   -- Get Global saved data
-  storage.getGlobalValue("worldHighScore", {})
+  refreshGlobalHighScores()
+end
+
+function refreshGlobalHighScores()
+  -- Get Global saved data
+  storage.getGlobalValue("globalHighScores", {}, function(retValue) 
+    globalHighScores = retValue
+    -- debug contents
+    for key,score in pairs(globalHighScores) do
+      log(" > ["..key.."] time="..score.time.." (💀="..score.deaths..")")
+    end
+  end)
 end
 
 function init_input()
