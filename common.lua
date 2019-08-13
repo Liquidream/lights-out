@@ -14,7 +14,8 @@ COL_FINISH = 8
 COL_LIGHT = 47
 COL_WRAP = 21
 
-MAX_LEVELS = 23
+START_LEVEL = 1
+MAX_LEVELS = 32
 MAX_LIGHT_DURATION = 3
 
 -- Andrew Kensler (+another black!)

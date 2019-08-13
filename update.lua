@@ -43,6 +43,8 @@ function levelUp()
     gameState = GAME_STATE.COMPLETED
     -- Submit player's score (if better than prev)
     submitHighScore()
+    -- reset back to level 1 again (for next play)
+    resetPlayerProgress()
   end
   -- Refresh Global saved data
   -- (do it periodically, so scores up-to-date)

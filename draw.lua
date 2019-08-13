@@ -18,12 +18,9 @@ function draw_game()
     
   elseif gameState == GAME_STATE.COMPLETED then
     -- draw congrats!
-    pprintc("TODO:", 10, 47)    
-    pprintc("ADD MORE LVLS", 20, 47)    
-    pprintc("PLS COME BACK!", 40, 47)
-    -- pprintc("CONGRATULATIONS", 10, 47)
-    -- pprintc("YOU COMPLETED", 30, 47)
-    -- pprintc("THE GAME!", 40, 47)
+    pprintc("CONGRATULATIONS", 10, 47,29)
+    pprintc("YOU COMPLETED", 30, 47,29)
+    pprintc("THE GAME!", 40, 47,29)
   else
     -- normal play (level intro/outro/game-over)    
     draw_level()

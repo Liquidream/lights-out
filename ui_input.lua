@@ -97,21 +97,7 @@ Mike Poole
 _**WARNING**: Clicking this will lose your saved progress!_
 ]])
     if ui.button("Reset", { kind='danger'}) then
-      -- reset progress
-      log("resetting player progress..")
-      levelReady = false
-      storage.currLevel = 1
-      storage.currTime = 0
-      storage.currDeaths = 0
-      storage.saveUserValues(function()
-        init_data()
-      end)
-
-      -- ####################################
-      -- ...also wipe GLOBAL data!
-      -- ####################################
-      --storage.setGlobalValue("globalHighScores",{})
-      -- ####################################
+      resetPlayerProgress()
     end
 
   end)

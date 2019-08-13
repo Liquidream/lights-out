@@ -18,7 +18,7 @@ function init_data()
   end)
   -- Get saved data...
   -- Last level reached
-  storage.getUserValue("currLevel", 1, function()
+  storage.getUserValue("currLevel", START_LEVEL, function()
     -- Now init level (either 1 or saved progress)
     init_level()
   end)
@@ -28,6 +28,26 @@ function init_data()
   storage.getUserValue("currDeaths", 0)
   -- Get Global saved data
   refreshGlobalHighScores()
+end
+
+function resetPlayerProgress()
+  -- reset progress
+  log("resetting player progress..")
+  levelReady = false
+  storage.currLevel = START_LEVEL
+  storage.currTime = 0
+  storage.currDeaths = 0
+  storage.saveUserValues(function()
+    if gameState ~= GAME_STATE.COMPLETED then
+      init_data()
+    end
+  end)
+
+  -- ####################################
+  -- ...also wipe GLOBAL data!
+  -- ####################################
+  --storage.setGlobalValue("globalHighScores",{})
+  -- ####################################
 end
 
 function refreshGlobalHighScores()
