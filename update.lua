@@ -84,6 +84,7 @@ function submitHighScore()
     }
     -- add/replace player's score
     globalHighScores[my_id] = newScore
+
     -- save global changes
     storage.setGlobalValue("globalHighScores",globalHighScores)
   end

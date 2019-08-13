@@ -18,11 +18,16 @@ function draw_game()
     
   elseif gameState == GAME_STATE.COMPLETED then
     -- draw congrats!
-    pprintc("CONGRATULATIONS", 10, 47,29)
-    pprintc("YOU COMPLETED", 30, 47,29)
-    pprintc("THE GAME!", 40, 47,29)
+    pprintc("CONGRATULATIONS", 0, 9,29)
+    pprintc("YOU COMPLETED", 8, 47,29)
+    pprintc("THE GAME!", 16, 47,29)    
+    local myScore = globalHighScores[my_id]
+    if myScore then
+      pprint("TIME = "..formatTime(myScore.time), 8,30, 45,29)
+      pprint("DEATHS = "..myScore.deaths, 0,38, 38,29)
+    end
   else
-    -- normal play (level intro/outro/game-over)    
+  --   -- normal play (level intro/outro/game-over)    
     draw_level()
   end
 
@@ -36,7 +41,7 @@ function draw_level()
 
   -- still loading?
   if not levelReady then
-    pprintc("LOADING...", 20, 47,29)
+    pprintc("  LOADING... ", 20, 47,29)
     -- abort now!
     return
   end
@@ -129,7 +134,7 @@ end
 -- pprint, centered
 function pprintc(text, y, col1, col2, col3)
     local letterWidth = 4
-    pprint(text, GAME_WIDTH/2-(#text*letterWidth)/2, y, col1,col2,col3)
+    pprint(text, GAME_WIDTH/2-((#text+1.5)*letterWidth)/2, y, col1,col2,col3)
 end
 
    

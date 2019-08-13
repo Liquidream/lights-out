@@ -21,26 +21,27 @@ Navigate the path to safety, with the...
 
   end)
 
+
+  
+-- TODO: Sort the table by score+deaths, reverse order
+
   ui.section("Global High Score", function()
     local scoreTable = [[
 | Name          | Time(#💀) |
 | ------------- |:------------:|]]
 
     if globalHighScores then
-      for key,score in pairs(globalHighScores) do
+      -- this uses an custom sorting function ordering by score descending
+      for key,score in spairs(globalHighScores, function(t,a,b) 
+        return (t[a].time+(t[a].deaths*10)) < (t[b].time+(t[b].deaths*10))         
+       end) 
+      do
         scoreTable = scoreTable.."\n"
          ..score.name.." | "..formatTime(score.time).." ("..score.deaths..") |"
       end
     end
     -- write final table    
     ui.markdown(scoreTable)
---     ui.markdown([[
--- | Name          | Time (💀's) |
--- | ------------- |:------------:|
--- | Liquidream     | 10m 30s (12💀) |
--- | Another    | 10m 30s (32💀)      |
--- | N.E.One    | 30m 1s (92💀)      |
--- ]])
   end)
 
   ui.section("Credits", function()
@@ -102,15 +103,5 @@ _**WARNING**: Clicking this will lose your saved progress!_
 
   end)
     
-
-  -- ui.section("Patreon Thanks", function()
-
-  --   ui.markdown([[
-  --     - 
-  --     - 
-  --     - 
-  --   ]])
-
-  -- end)
 
 end
