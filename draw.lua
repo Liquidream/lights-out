@@ -3,12 +3,12 @@
 function draw_game()
   cls()
   -- set default pprint style
-  printp( 0x3330,
-          0x3130,
-          0x3230,
-          0x0 
-        )
-  printp_color(0, 0, 0, 0)
+  printp(
+    0x1000, 
+    0x2000, 
+    0x0, 
+    0x0)
+  printp_color(47, 0, 0, 0)
 
   if gameState == GAME_STATE.SPLASH then
     -- todo: splash screen
@@ -122,7 +122,7 @@ function draw_level()
 
   -- Draw UI  
   if game_time < 100 then
-    pprintc("LEVEL "..storage.currLevel, 1, 47)
+    pprintc("LEVEL "..storage.currLevel, 1, 47,29)
   end
 
   -- pprintc("TIME "..flr(storage.currTime),40, 47)  
