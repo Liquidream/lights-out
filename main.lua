@@ -5,15 +5,15 @@
 
 ## TODO's
 - • Instructions
-- • Global high-score
-- • Credits (Jason, @somepx, Patreon supporters)
 
 ## IDEAS
-  • Have a global high score table for 
-    - Times+deaths to complete of ALL levels
-    - Use Castle's UI to show it!
 
 ## DONE
+- • Global high-score
+    • Have a global high score table for 
+      - Times+deaths to complete of ALL levels
+      - Use Castle's UI to show it!
+- • Credits (Jason, @somepx, Patreon supporters)
   • Have a light switch tile (shows level again for a few secs, once!)
   • Have advanced levels with DOORS (wrap level, like "Pac Man")
 
@@ -22,6 +22,25 @@
    (https://www.patreon.com/posts/three-tiny-fonts-24214421)
 
 ]]
+
+
+if CASTLE_PREFETCH then
+  CASTLE_PREFETCH({
+    'common.lua',
+    'draw.lua',
+    'init.lua',
+    'main.lua',
+    'storage.lua',
+    'ui_input.lua',
+    'update.lua',
+    'sugarcoat/sugarcoat.lua',
+    'assets/levels.png',
+    'assets/Particle.ttf',
+    'assets/splash.png',
+    'assets/spritesheet.png',
+    'assets/title-text.png',
+  })
+end  
 
 require("sugarcoat/sugarcoat")
 sugar.utility.using_package(sugar.S, true)
