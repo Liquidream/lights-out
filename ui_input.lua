@@ -54,7 +54,7 @@ Navigate the path to safety, with the...
 **[Jason Riggs](https://twitter.com/_castlegames)**
 
 **Creative Director**:  
-**[Hilda Nicholas](https://twitter.com/shade_green)**
+**[Hilda Nicholas](https://www.instagram.com/hildanicholas)**
 
 **"Particle" Font**:  
 **[Eeve Somepx](https://twitter.com/somepx)**
