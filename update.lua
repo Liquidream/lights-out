@@ -189,7 +189,6 @@ function checkTile()
     -- player fell
     log("player fell!")
     Sounds.fall:play()
-    Sounds.music:stop()
     storage.currDeaths = storage.currDeaths + 1
     saveProgress()
     player.fell = true
