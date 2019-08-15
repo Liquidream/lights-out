@@ -1,4 +1,4 @@
-
+local Sounds = require 'sounds'
 
 function draw_game()
   cls()
@@ -55,7 +55,8 @@ function draw_level()
   local segment = lightTime%1
   --log(segment)
   local flicker = lightTime < MAX_LIGHT_DURATION
-   and (segment>=.8 and segment<=1)
+   and (segment>=.8 and segment<=1)  
+
    --and player.tileCol ~= 47
   -- place level tiles, based on pixels  
   local lvl_offset = (storage.currLevel-1)*8
@@ -68,6 +69,7 @@ function draw_level()
        then
         -- is tile still "lighting up"?
         local dim = false
+        
         if player.tileHistory[x..","..y]
          and player.tileHistory[x..","..y]<1 
         then

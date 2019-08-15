@@ -39,8 +39,15 @@ if CASTLE_PREFETCH then
     'assets/splash.png',
     'assets/spritesheet.png',
     'assets/title-text.png',
+    'assets/snd/music.mp3',
+    'assets/snd/win.mp3',
+    'assets/snd/fall.mp3',
+    'assets/snd/step.mp3',
+    'assets/snd/flicker_high.mp3',
+    'assets/snd/flicker_low.mp3',
+    'assets/snd/start_level.mp3',
   })
-end  
+end
 
 require("sugarcoat/sugarcoat")
 sugar.utility.using_package(sugar.S, true)

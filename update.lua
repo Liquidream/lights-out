@@ -1,3 +1,4 @@
+local Sounds = require 'sounds'
 
 --tweetCounter=0
 
@@ -177,6 +178,8 @@ function checkTile()
   elseif player.tileCol == COL_FINISH then
     -- player reached end
     log("- level complete -")
+    Sounds.win:play()
+    Sounds.music:stop()
     player.win_time = game_time
     gameState = GAME_STATE.LVL_END
     state_time = 0
@@ -185,6 +188,8 @@ function checkTile()
   else
     -- player fell
     log("player fell!")
+    Sounds.fall:play()
+    Sounds.music:stop()
     storage.currDeaths = storage.currDeaths + 1
     saveProgress()
     player.fell = true

@@ -1,3 +1,4 @@
+local Sounds = require 'sounds'
 
 function init_sugarcoat()
   init_sugar("Lights-Out", GAME_WIDTH, GAME_HEIGHT, GAME_SCALE)
@@ -79,6 +80,8 @@ function init_level()
   gameState = GAME_STATE.LVL_PLAY   
   light_start = love.timer.getTime()
   levelReady = true
+  Sounds.startLevel:play()
+  Sounds.music:play()
   log("init done!!")
 end
 
@@ -127,6 +130,7 @@ function init_player()
 end
 
 function init_player_move(angle, dx, dy)
+  Sounds.step:play()
   player.angle = angle
  
   
@@ -179,6 +183,33 @@ function init_anim(anim_obj, anim, func_on_finish)
   anim_obj.func_on_finish = func_on_finish
 end
 
+function init_sounds()
+  Sounds.music = Sound:new('music.mp3', 1)
+  Sounds.music:setVolume(0.7)
+  Sounds.music:setLooping(true)
+
+  Sounds.step = Sound:new('step.mp3', 2)
+  Sounds.step:setVolume(0.3)
+
+  Sounds.fall = Sound:new('fall.mp3', 1)
+  Sounds.fall:setVolume(0.5)
+
+  Sounds.flickerHigh = Sound:new('flicker_high.mp3', 1)
+  Sounds.flickerHigh:setVolume(0.7)
+
+  Sounds.flickerLow = Sound:new('flicker_low.mp3', 1)
+  Sounds.flickerLow:setVolume(0.7)
+
+  Sounds.splash = Sound:new('splash.mp3', 1)
+  Sounds.splash:setVolume(0.7)
+
+  Sounds.win = Sound:new('win.mp3', 1)
+  Sounds.win:setVolume(0.45)
+
+  Sounds.startLevel = Sound:new('start_level.mp3', 1)
+  Sounds.startLevel:setVolume(0.7)
+end
+
 function load_assets()
   -- load gfx
   load_png("spritesheet", "assets/spritesheet.png", nil, true)
@@ -187,6 +218,7 @@ function load_assets()
   scan_surface("levels")
 
   -- todo: load sfx + music
+  init_sounds()
 
 end
 
