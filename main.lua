@@ -4,11 +4,11 @@
 -- (for #LOWREZJAM 2019)
 
 ## TODO's
-- • Instructions
 
 ## IDEAS
 
 ## DONE
+- • Instructions (not really needed - as sidebar intro covers it)
 - • Global high-score
     • Have a global high score table for 
       - Times+deaths to complete of ALL levels

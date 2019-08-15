@@ -171,6 +171,8 @@ function checkTile()
     if not player.tileHistory[cx..","..cy] then
       log("temp light on")
       light_start = love.timer.getTime()
+      -- Added sound to make it significant
+      Sounds.startLevel:play()
     else
       log("temp light already used!")      
     end
