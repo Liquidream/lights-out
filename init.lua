@@ -188,10 +188,10 @@ function init_sounds()
   Sounds.music:setVolume(0.7)
   Sounds.music:setLooping(true)
 
-  Sounds.step = Sound:new('step.mp3', 2)
+  Sounds.step = Sound:new('step.mp3', 3)
   Sounds.step:setVolume(0.25)
 
-  Sounds.fall = Sound:new('fall.mp3', 1)
+  Sounds.fall = Sound:new('fall.mp3', 3)
   Sounds.fall:setVolume(0.5)
 
   Sounds.flickerHigh = Sound:new('flicker_high.mp3', 1)
@@ -206,7 +206,7 @@ function init_sounds()
   Sounds.win = Sound:new('win.mp3', 1)
   Sounds.win:setVolume(0.3)
 
-  Sounds.startLevel = Sound:new('start_level.mp3', 1)
+  Sounds.startLevel = Sound:new('start_level.mp3', 3)
   Sounds.startLevel:setVolume(0.7)
 end
 
