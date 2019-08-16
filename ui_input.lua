@@ -15,9 +15,7 @@ Navigate the path to safety, with the...
 
   ui.section("Controls", function()
 
-    ui.markdown([[
-**⬆⬇⬅➡** = *Move Player*
-]])
+    ui.markdown('![](assets/controls.png) = *Move Player*') 
 
   end)
 
