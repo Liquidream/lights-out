@@ -39,6 +39,7 @@ if CASTLE_PREFETCH then
     'assets/splash.png',
     'assets/spritesheet.png',
     'assets/title-text.png',
+    'assets/controls.png',
     'assets/snd/music.mp3',
     'assets/snd/win.mp3',
     'assets/snd/fall.mp3',
