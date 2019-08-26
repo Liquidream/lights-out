@@ -63,10 +63,17 @@ function refreshGlobalHighScores()
 end
 
 function init_input()
-  register_btn(0, 0, input_id("keyboard", "left"))
-  register_btn(1, 0, input_id("keyboard", "right"))
-  register_btn(2, 0, input_id("keyboard", "up"))
-  register_btn(3, 0, input_id("keyboard", "down"))
+  -- keyboard & gamepad input
+  register_btn(0, 0, {input_id("keyboard", "left"),
+                      input_id("controller_button", "dpleft")})
+  register_btn(1, 0, {input_id("keyboard", "right"),
+                      input_id("controller_button", "dpright")})
+  register_btn(2, 0, {input_id("keyboard", "up"),
+                      input_id("controller_button", "dpup")})
+  register_btn(3, 0, {input_id("keyboard", "down"),
+                      input_id("controller_button", "dpdown")})
+
+
 end
 
 function init_level()
