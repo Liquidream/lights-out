@@ -140,10 +140,9 @@ function init_player()
   player.curr_anim = player.idle_anim
 end
 
-function init_player_move(angle, dx, dy)
+function init_player_move(angle, dx, dy)  
   Sounds.step:play()
-  player.angle = angle
- 
+  player.angle = angle 
   
   -- assume normal move (within screen bounds?)
   player.newX = player.x+(8*dx)
@@ -182,6 +181,8 @@ function init_player_move(angle, dx, dy)
        player.moveCount%2==0 
         and player.walk_anim_1 or player.walk_anim_2)
   player.moveCount = player.moveCount + 1
+
+  player.moved = true
 end
 
 function init_anim(anim_obj, anim, func_on_finish)
@@ -235,17 +236,17 @@ end
 
 function init_detail_anims()
   -- random monsters
-  monsters = {}
+  monsters = {}  
+  local frames = {}
+  for i=40,79 do
+    table.insert(frames,i)
+  end
   for i=1,irnd(2)+2 do
     local val = irnd(64)
     local cx,cy = val%8, flr(val/8)    
     if sget(cx, cy, "levels")==0 
     and sget(cx, cy-1, "levels")==0 
     then
-      local frames = {}
-      for i=40,79 do
-        table.insert(frames,i)
-      end
       table.insert(monsters, {
         x = cx*8,
         y = cy*8,

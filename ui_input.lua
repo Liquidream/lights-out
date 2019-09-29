@@ -9,8 +9,8 @@ function castle.uiupdate()
   ui.markdown('![](assets/title-text.png)')   
 
   ui.markdown([[
-Navigate the path to safety, 
-with the... 💡 **LIGHTS OUT**!
+Navigate the path to safety,   
+with the... **LIGHTS OUT**!💡
 ]])
 
   ui.section("Controls", { defaultOpen = true }, function()

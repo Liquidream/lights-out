@@ -150,7 +150,7 @@ end
 
 -- check the tile the player is now on
 function checkTile()
-  
+  log("in checkTile...")
   local lvl_offset = (storage.currLevel-1)*8
   local cx = player.tx>0 and player.tx or 0
   local cy = player.ty>0 and player.ty or 0

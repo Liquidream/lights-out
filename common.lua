@@ -98,6 +98,9 @@ function formatTime(timeInSecs)
   return strTime
 end
 
+function alternate()
+  return flr(t())%2 == 0 
+end
 
 -- https://stackoverflow.com/a/15706820
 function spairs(t, order)

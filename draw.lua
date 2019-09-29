@@ -57,8 +57,9 @@ function draw_level()
   local flicker = lightTime < MAX_LIGHT_DURATION
    and (segment>=.8 and segment<=1)  
 
-   --and player.tileCol ~= 47
+   
   -- place level tiles, based on pixels  
+  --palt(0,false)
   local lvl_offset = (storage.currLevel-1)*8
   for x=0,7 do
     for y=0,7 do
@@ -127,7 +128,16 @@ function draw_level()
   -- Draw UI  
   if game_time < 100 then
     pprintc("LEVEL "..storage.currLevel, 1, 47,29)
+
+  elseif storage.currLevel == 1
+   and game_time > 300 
+   and not player.moved then
+    -- draw "hint"
+     if not alternate() then
+      spr(80, player.x + 10 + sin(t()*2)*1.1, player.y)
+     end
   end
+
 
   -- pprintc("TIME "..flr(storage.currTime),40, 47)  
   -- pprintc("DEATHS "..flr(storage.currDeaths),50, 47)  
