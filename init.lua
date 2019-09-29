@@ -241,11 +241,15 @@ function init_detail_anims()
     local cx,cy = val%8, flr(val/8)    
     if sget(cx, cy, "levels")==0 
     and sget(cx, cy-1, "levels")==0 
-    then      
+    then
+      local frames = {}
+      for i=40,80 do
+        table.insert(frames,i)
+      end
       table.insert(monsters, {
         x = cx*8,
         y = cy*8,
-        curr_anim = {40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63},
+        curr_anim = frames,
         frame_pos = irnd(24),
         frame_delay = 5,
         frame_count = 0,
