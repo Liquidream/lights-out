@@ -4,8 +4,13 @@
 -- (for #LOWREZJAM 2019)
 
 ## TODO's
+  • 
 
 ## IDEAS
+  • New mechanics
+  • New tile cols/shapes (for diff zones)
+  • 
+  • 
 
 ## DONE
 - • Instructions (not really needed - as sidebar intro covers it)

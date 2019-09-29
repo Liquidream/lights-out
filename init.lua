@@ -243,7 +243,7 @@ function init_detail_anims()
     and sget(cx, cy-1, "levels")==0 
     then
       local frames = {}
-      for i=40,80 do
+      for i=40,79 do
         table.insert(frames,i)
       end
       table.insert(monsters, {
