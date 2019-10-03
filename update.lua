@@ -123,8 +123,8 @@ function update_player(dt)
       player.moving = false
       player.x = player.newX
       player.y = player.newY
-      player.tx = player.x/8
-      player.ty = player.y/8
+      player.tx = player.x/TILE_SIZE
+      player.ty = player.y/TILE_SIZE
       init_anim(player, player.idle_anim)
       checkTile()
     end    

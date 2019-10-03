@@ -145,14 +145,14 @@ function init_player_move(angle, dx, dy)
   player.angle = angle 
   
   -- assume normal move (within screen bounds?)
-  player.newX = player.x+(8*dx)
-  player.newY = player.y+(8*dy)
+  player.newX = player.x+(TILE_SIZE*dx)
+  player.newY = player.y+(TILE_SIZE*dy)
 
   -- check for "wrap" screen movement
-  if player.newX < 0 then player.wrapX=1 player.newX = 56 end
-  if player.newY < 0 then player.wrapY=1 player.newY = 56 end
-  if player.newX > 56 then player.wrapX=-1 player.newX = 0 end
-  if player.newY > 56 then player.wrapY=-1 player.newY = 0 end
+  if player.newX < 0 then player.wrapX=1 player.newX = (GAME_WIDTH-TILE_SIZE) end
+  if player.newY < 0 then player.wrapY=1 player.newY = (GAME_HEIGHT-TILE_SIZE) end
+  if player.newX > (GAME_WIDTH-TILE_SIZE) then player.wrapX=-1 player.newX = 0 end
+  if player.newY > (GAME_HEIGHT-TILE_SIZE) then player.wrapY=-1 player.newY = 0 end
 
   -- check to see if player on a "wrap" tile
   -- (if not, then undo the move)
