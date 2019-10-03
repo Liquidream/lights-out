@@ -83,40 +83,40 @@ function draw_level()
         end
         if col==COL_START then
           -- draw start
-          spr(0, x*8, y*8)
+          spr(0, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
-          spr(8, x*8, (y+1)*8)
+          spr(10, x*TILE_SIZE, (y+1)*TILE_SIZE)
 
         elseif col==COL_PATH or col==COL_WRAP then
           -- draw path?
-          spr((flicker or dim) and 4 or 1, x*8, y*8)
+          spr((flicker or dim) and 4 or 1, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
-          spr((flicker or dim) and 11 or 8, x*8, (y+1)*8)
+          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)
 
         elseif col==COL_LIGHT then
           -- draw end
-          spr((flicker or dim) and 7 or 6, x*8, y*8)
+          spr((flicker or dim) and 43 or 40, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
-          spr((flicker or dim) and 11 or 8, x*8, (y+1)*8)        
+          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)        
 
         elseif col==COL_FINISH then
           -- draw end
-          spr((flicker or dim) and 5 or 2, x*8, y*8)
+          spr((flicker or dim) and 5 or 2, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
-          spr((flicker or dim) and 11 or 8, x*8, (y+1)*8)
+          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)
         end
       end
     end
   end
   
   -- draw player (current anim cycle)
-  aspr(player.curr_anim[player.frame_pos], player.x+4, player.y+4, player.angle)
+  aspr(player.curr_anim[player.frame_pos], player.x+7, player.y+7, player.angle)
 
   -- draw "wrap" movement?
   -- (draw a second player sprite so we see the wrap)
   if player.wrapX or player.wrapY then
-    local offX = player.wrapX and (player.wrapX>0 and 63 or -7) or player.newX
-    local offY = player.wrapY and (player.wrapY>0 and 63 or -7) or player.newY
+    local offX = player.wrapX and (player.wrapX>0 and GAME_WIDTH-1 or -7) or player.newX
+    local offY = player.wrapY and (player.wrapY>0 and GAME_HEIGHT-1 or -7) or player.newY
     log("draw wrap!! "..offX..","..offY)
     aspr(player.curr_anim[player.frame_pos], 
       offX-(player.lastX-player.x)+4, 
@@ -134,7 +134,7 @@ function draw_level()
    and not player.moved then
     -- draw "hint"
      if not alternate() then
-      spr(80, player.x + 10 + sin(t()*2)*1.1, player.y)
+      spr(90, player.x + 20 + sin(t()*2)*1.1, player.y)
      end
   end
 

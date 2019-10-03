@@ -108,7 +108,7 @@ function load_level(lvl_num)
         -- found start
         log("found player start at: "..x..","..y)
         -- place player at start
-        player.x,player.y = x*8,y*8
+        player.x,player.y = x*TILE_SIZE, y*TILE_SIZE
         player.tx,player.ty = x,y
       else
       end
@@ -124,11 +124,11 @@ function init_player()
     x = 30,
     y = 30,
     angle = 0.25, --0=right, 0.25=down, 0.5=left, 0.75=top
-    idle_anim = {18},
-    walk_anim_1 = {16,17,17,17},
-    walk_anim_2 = {18,19,19,19},
-    fall_anim = {24,25,26,27,28,29},
-    win_anim = {32,33,34,35},
+    idle_anim = {60},
+    walk_anim_1 = {60,61,61,61},
+    walk_anim_2 = {62,63,63,63},
+    fall_anim = {70,71,72,73,74,75},
+    win_anim = {80,81,82,83},
     frame_pos = 1,
     frame_delay = 5,
     frame_count = 0,
@@ -225,6 +225,7 @@ end
 function load_assets()
   -- load gfx
   load_png("spritesheet", "assets/spritesheet.png", nil, true)
+  spritesheet_grid(14,14)
   load_png("levels", "assets/levels.png", nil, true)
   -- capture pixel info
   scan_surface("levels")
@@ -238,18 +239,18 @@ function init_detail_anims()
   -- random monsters
   monsters = {}  
   local frames = {}
-  for i=40,79 do
+  for i=100,119 do
     table.insert(frames,i)
   end
   for i=1,irnd(2)+2 do
     local val = irnd(64)
-    local cx,cy = val%8, flr(val/8)    
+    local cx,cy = val%TILE_SIZE, flr(val/TILE_SIZE)
     if sget(cx, cy, "levels")==0 
     and sget(cx, cy-1, "levels")==0 
     then
       table.insert(monsters, {
-        x = cx*8,
-        y = cy*8,
+        x = cx*TILE_SIZE,
+        y = cy*TILE_SIZE,
         curr_anim = frames,
         frame_pos = irnd(24),
         frame_delay = 5,

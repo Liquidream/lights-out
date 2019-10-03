@@ -3,10 +3,11 @@
 -- Constants
 --
 DEBUG_MODE = true
-GAME_WIDTH = 64  -- 16:9 aspect ratio that fits nicely
-GAME_HEIGHT = 64 -- within the default Castle window size
+GAME_WIDTH = 112  -- Tilesize=14 * 8
+GAME_HEIGHT = 112
 GAME_SCALE = 3
 GAME_STATE = { SPLASH=0, TITLE=1, INFO=2, LVL_INTRO=3, LVL_PLAY=4, LVL_END=5, LOSE_LIFE=6, GAME_OVER=7, COMPLETED=8 }
+TILE_SIZE = 14
 
 COL_START = 38
 COL_PATH = 45
