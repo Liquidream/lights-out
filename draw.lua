@@ -95,7 +95,7 @@ function draw_level()
 
         elseif col==COL_LIGHT then
           -- draw end
-          spr((flicker or dim) and 43 or 40, x*TILE_SIZE, y*TILE_SIZE)
+          spr((flicker or dim) and 23 or 20, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
           spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)        
 
