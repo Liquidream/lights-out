@@ -239,11 +239,11 @@ function init_detail_anims()
   -- random monsters
   monsters = {}  
   local frames = {}
-  for i=100,119 do
+  for i=100,159 do
     table.insert(frames,i)
   end
   for i=1,irnd(2)+2 do
-    local val = irnd(64)
+    local val = irnd(GAME_WIDTH)
     local cx,cy = val%TILE_SIZE, flr(val/TILE_SIZE)
     if sget(cx, cy, "levels")==0 
     and sget(cx, cy-1, "levels")==0 
@@ -252,7 +252,7 @@ function init_detail_anims()
         x = cx*TILE_SIZE,
         y = cy*TILE_SIZE,
         curr_anim = frames,
-        frame_pos = irnd(24),
+        frame_pos = irnd(#frames),
         frame_delay = 5,
         frame_count = 0,
       })      
