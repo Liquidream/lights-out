@@ -59,7 +59,7 @@ function draw_level()
 
    
   -- place level tiles, based on pixels  
-  --palt(0,false)
+  palt(0,false)
   local lvl_offset = (storage.currLevel-1)*8
   for x=0,7 do
     for y=0,7 do
@@ -109,6 +109,8 @@ function draw_level()
     end
   end
   
+  palt()
+
   -- draw player (current anim cycle)
   aspr(player.curr_anim[player.frame_pos], player.x+7, player.y+7, player.angle)
 
