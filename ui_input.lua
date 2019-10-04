@@ -54,7 +54,7 @@ with the... **LIGHTS OUT**!💡
 **Creative Director**:  
 **[Hilda Nicholas](https://www.instagram.com/hildanicholas)**
 
-**"Particle" Font**:  
+**"Hungry" Font**:  
 **[Eeve Somepx](https://twitter.com/somepx)**
 
 #### Special Thanks to the following supporters on [Patreon](https://www.patreon.com/liquidream):

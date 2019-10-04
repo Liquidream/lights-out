@@ -4,7 +4,8 @@ function init_sugarcoat()
   init_sugar("Lights-Out", GAME_WIDTH, GAME_HEIGHT, GAME_SCALE)
   
   use_palette(ak54)
-  load_font ("assets/Particle.ttf", 16, "main-font", true)
+  load_font ("assets/Hungry.ttf", 16, "main-font", true)
+  --load_font ("assets/Particle.ttf", 16, "main-font", true)
   screen_render_stretch(false)
   screen_render_integer_scale(false)
   set_frame_waiting(60)
@@ -229,10 +230,8 @@ function load_assets()
   load_png("levels", "assets/levels.png", nil, true)
   -- capture pixel info
   scan_surface("levels")
-
   -- todo: load sfx + music
   init_sounds()
-
 end
 
 function init_detail_anims()

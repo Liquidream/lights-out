@@ -1,7 +1,7 @@
 --[[
 -- Lights Out
 -- by Paul Nicholas
--- (for #LOWREZJAM 2019)
+-- (originally for #LOWREZJAM 2019)
 
 ## TODO's
   • 
@@ -40,7 +40,7 @@ if CASTLE_PREFETCH then
     'update.lua',
     'sugarcoat/sugarcoat.lua',
     'assets/levels.png',
-    'assets/Particle.ttf',
+    'assets/Hungry.ttf',
     'assets/splash.png',
     'assets/spritesheet.png',
     'assets/title-text.png',

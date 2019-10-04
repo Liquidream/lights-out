@@ -4,10 +4,15 @@ function draw_game()
   cls()
   -- set default pprint style
   printp(
-    0x1000, 
-    0x2000, 
-    0x0, 
+    0x2220, 
+    0x2120, 
+    0x2220, 
     0x0)
+  -- printp(
+  --   0x1000, 
+  --   0x2000, 
+  --   0x0, 
+  --   0x0)
   printp_color(47, 0, 0, 0)
 
   if gameState == GAME_STATE.SPLASH then
@@ -147,7 +152,7 @@ end
 
 -- pprint, centered
 function pprintc(text, y, col1, col2, col3)
-    local letterWidth = 4
+    local letterWidth = 6.5
     pprint(text, GAME_WIDTH/2-((#text+1.5)*letterWidth)/2, y, col1,col2,col3)
 end
 
