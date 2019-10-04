@@ -125,12 +125,12 @@ function init_player()
     y = 30,
     angle = 0.25, --0=right, 0.25=down, 0.5=left, 0.75=top
     idle_anim = {60},
-    walk_anim_1 = {60,61,61,61},
-    walk_anim_2 = {62,63,63,63},
+    walk_anim_1 = {60,61,62,62,61},
+    walk_anim_2 = {63,64,65,65,64},
     fall_anim = {70,71,72,73,74,75},
     win_anim = {80,81,82,83},
     frame_pos = 1,
-    frame_delay = 5,
+    frame_delay = 2,
     frame_count = 0,
     moving = false,
     moveFrameCount = 0,
@@ -167,8 +167,8 @@ function init_player_move(angle, dx, dy)
   end
 
    -- calc tween "smoothness"
-   local frames = 12
-   local pxDist = 8
+   local frames = 16 --12
+   local pxDist = TILE_SIZE
    player.dx = (pxDist/frames) * dx
    player.dy = (pxDist/frames) * dy
    player.moveFrameCount = frames
@@ -188,9 +188,9 @@ end
 function init_anim(anim_obj, anim, func_on_finish)
   anim_obj.curr_anim = anim
   anim_obj.frame_count = 0
-  if anim_obj.frame_pos > #anim then
+  --if anim_obj.frame_pos > #anim then
     anim_obj.frame_pos = 1
-  end
+  --end
   -- set the function to run on finish (if applicable)
   anim_obj.func_on_finish = func_on_finish
 end
