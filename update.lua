@@ -151,11 +151,12 @@ end
 -- check the tile the player is now on
 function checkTile()
   log("in checkTile...")
-  local lvl_offset = (storage.currLevel-1)*8
+  local lvl_xoffset = ((storage.currLevel-1)%10*8)
+  local lvl_yoffset = flr((storage.currLevel-1)/10)*8
   local cx = player.tx>0 and player.tx or 0
   local cy = player.ty>0 and player.ty or 0
-  player.tileCol = sget(cx+lvl_offset,cy,"levels")
-  log("...checkTile ("..cx+lvl_offset..","..cy..") = "..player.tileCol)
+  player.tileCol = sget(cx+lvl_xoffset,cy+lvl_yoffset,"levels")
+  log("...checkTile ("..cx+lvl_xoffset..","..cy+lvl_yoffset..") = "..player.tileCol)
   log("player pos = "..player.x..","..player.y)
 
   if player.tileCol == COL_START then

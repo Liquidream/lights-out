@@ -98,12 +98,15 @@ function init_level()
 end
 
 function load_level(lvl_num)
-  local lvl_offset = (storage.currLevel-1)*8
+  local lvl_xoffset = ((storage.currLevel-1)%10*8)
+  local lvl_yoffset = flr((storage.currLevel-1)/10)*8
+  log("lvl_xoffset="..lvl_xoffset)
+  log("lvl_yoffset="..lvl_yoffset)
   -- todo: read pixel data for level
   spritesheet("levels")
   for x=0,7 do
     for y=0,7 do
-      local col=sget(x+lvl_offset, y, "levels")
+      local col=sget(x+lvl_xoffset, y+lvl_yoffset, "levels")
       -- handle level data
       if col==COL_START then
         -- found start

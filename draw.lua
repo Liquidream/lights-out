@@ -23,14 +23,16 @@ function draw_game()
     
   elseif gameState == GAME_STATE.COMPLETED then
     -- draw congrats!
-    pprintc("CONGRATULATIONS", 0, 9,29)
-    pprintc("YOU COMPLETED", 8, 47,29)
-    pprintc("THE GAME!", 16, 47,29)    
+    pprintc("CONGRATULATIONS", 8, 9,29)
+    pprintc("YOU COMPLETED", 24, 47,29)
+    pprintc("THE GAME!", 34, 47,29)    
     local myScore = globalHighScores[my_id]
     if myScore then
-      pprint("TIME = "..formatTime(myScore.time), 8,30, 45,29)
-      pprint("DEATHS = "..myScore.deaths, 0,38, 38,29)
+      pprint("TIME = "..formatTime(myScore.time), 8,51, 45,29)
+      pprint("DEATHS = "..myScore.deaths, 0,61, 38,29)
     end
+    pprintc("DON'T FORGET TO", 80, 17,29)
+    pprintc("SHARE YOUR SCORE", 90, 17,29)
   else
   --   -- normal play (level intro/outro/game-over)    
     draw_level()
@@ -65,10 +67,11 @@ function draw_level()
    
   -- place level tiles, based on pixels  
   palt(0,false)
-  local lvl_offset = (storage.currLevel-1)*8
+  local lvl_xoffset = ((storage.currLevel-1)%10*8)
+  local lvl_yoffset = flr((storage.currLevel-1)/10)*8
   for x=0,7 do
     for y=0,7 do
-      local col=sget(x+lvl_offset, y, "levels")
+      local col=sget(x+lvl_xoffset, y+lvl_yoffset, "levels")
       -- handle level data
       if lightTime < MAX_LIGHT_DURATION
        or player.tileHistory[x..","..y]        
