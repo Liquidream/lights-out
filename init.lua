@@ -129,8 +129,8 @@ function init_player()
     y = 30,
     angle = 0.25, --0=right, 0.25=down, 0.5=left, 0.75=top
     idle_anim = {60},
-    walk_anim_1 = {61,62,62,61},
-    walk_anim_2 = {64,65,65,64},
+    walk_anim_1 = {62,63,63,62,61,61},
+    walk_anim_2 = {66,67,67,66,65,65},
     fall_anim = {70,71,72,73,74,75,76},
     win_anim = {80,81,82,83,84,85,86},
     frame_pos = 1,
