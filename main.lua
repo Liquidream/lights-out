@@ -30,6 +30,8 @@
  • @somepx for Particle font
    (https://www.patreon.com/posts/three-tiny-fonts-24214421)
 
+ • https://freesound.org/people/Leszek_Szary/sounds/146723/
+
 ]]
 
 
@@ -53,6 +55,7 @@ if CASTLE_PREFETCH then
     'assets/snd/win.mp3',
     'assets/snd/fall.mp3',
     'assets/snd/step.mp3',
+    'assets/snd/collect.mp3',
     'assets/snd/flicker_high.mp3',
     'assets/snd/flicker_low.mp3',
     'assets/snd/start_level.mp3',

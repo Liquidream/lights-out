@@ -162,6 +162,17 @@ function checkTile()
   if player.tileCol == COL_START then
     -- player on start
     -- do nothing
+  elseif player.tileCol == COL_FINISH then
+    -- player reached end
+    log("- level complete -")
+    Sounds.win:play()
+    Sounds.music:stop()
+    player.win_time = game_time
+    gameState = GAME_STATE.LVL_END
+    state_time = 0
+    player.angle = 0.25
+    init_anim(player, player.win_anim)
+
   elseif player.tileCol == COL_PATH 
    or player.tileCol==COL_WRAP then
     -- player found path (valid movement)
@@ -177,17 +188,22 @@ function checkTile()
     else
       log("temp light already used!")      
     end
+  
+  elseif player.tileCol == COL_KEY_BLUE then
+    -- collect blue key (if not already)
+    if not player.gotBlueKey then
+      player.gotBlueKey = true
+      -- play collect sfx
+      -- Sounds.win:seek(25500,"samples")  -- temp SFX
+      -- Sounds.win:play()                 --
+      Sounds.collect:play()
+    end
 
-  elseif player.tileCol == COL_FINISH then
-    -- player reached end
-    log("- level complete -")
-    Sounds.win:play()
-    Sounds.music:stop()
-    player.win_time = game_time
-    gameState = GAME_STATE.LVL_END
-    state_time = 0
-    player.angle = 0.25
-    init_anim(player, player.win_anim)
+  elseif player.tileCol == COL_BLUE
+   and player.gotBlueKey then
+    -- player found blue path AND has blue
+    log("valid move")
+
   else
     -- player fell
     log("player fell!")

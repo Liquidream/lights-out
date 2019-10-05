@@ -224,6 +224,9 @@ function init_sounds()
 
   Sounds.startLevel = Sound:new('start_level.mp3', 3)
   Sounds.startLevel:setVolume(0.7)
+  
+  Sounds.collect = Sound:new('collect.mp3', 3)
+  Sounds.collect:setVolume(0.7)
 end
 
 function load_assets()

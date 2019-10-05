@@ -74,7 +74,8 @@ function draw_level()
       local col=sget(x+lvl_xoffset, y+lvl_yoffset, "levels")
       -- handle level data
       if lightTime < MAX_LIGHT_DURATION
-       or player.tileHistory[x..","..y]        
+       or player.tileHistory[x..","..y]
+       or col==COL_KEY_BLUE
        then
         -- is tile still "lighting up"?
         local dim = false
@@ -115,15 +116,15 @@ function draw_level()
 
         elseif col==COL_KEY_BLUE then
           -- draw path?
-          spr((flicker or dim) and 4 or 1, x*TILE_SIZE, y*TILE_SIZE)
+          spr(1, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
-          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)     
+          spr(10, x*TILE_SIZE, (y+1)*TILE_SIZE)     
           -- draw key?
           if not player.gotBlueKey then
             palt()
             local bounce = sin(t())*1.5
-            line(x*TILE_SIZE+4-bounce, y*TILE_SIZE+8, x*TILE_SIZE+TILE_SIZE-3+bounce, y*TILE_SIZE+8, (flicker or dim) and 0 or 41)
-            spr((flicker or dim) and 41 or 40, x*TILE_SIZE, y*TILE_SIZE + bounce)
+            line(x*TILE_SIZE+4-bounce, y*TILE_SIZE+8, x*TILE_SIZE+TILE_SIZE-3+bounce, y*TILE_SIZE+8, 41)
+            spr(40, x*TILE_SIZE, y*TILE_SIZE + bounce)
             palt(0,false)
           end
 
