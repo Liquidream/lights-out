@@ -95,6 +95,12 @@ function draw_level()
           -- draw edge?
           spr(10, x*TILE_SIZE, (y+1)*TILE_SIZE)
 
+        elseif col==COL_FINISH then
+          -- draw end
+          spr((flicker or dim) and 5 or 2, x*TILE_SIZE, y*TILE_SIZE)
+          -- draw edge?
+          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)
+        
         elseif col==COL_PATH or col==COL_WRAP then
           -- draw path?
           spr((flicker or dim) and 4 or 1, x*TILE_SIZE, y*TILE_SIZE)
@@ -107,11 +113,25 @@ function draw_level()
           -- draw edge?
           spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)        
 
-        elseif col==COL_FINISH then
-          -- draw end
-          spr((flicker or dim) and 5 or 2, x*TILE_SIZE, y*TILE_SIZE)
+        elseif col==COL_KEY_BLUE then
+          -- draw path?
+          spr((flicker or dim) and 4 or 1, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
-          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)
+          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)     
+          -- draw key?
+          if not player.gotBlueKey then
+            palt()
+            local bounce = sin(t())*1.5
+            line(x*TILE_SIZE+4-bounce, y*TILE_SIZE+8, x*TILE_SIZE+TILE_SIZE-3+bounce, y*TILE_SIZE+8, (flicker or dim) and 0 or 41)
+            spr((flicker or dim) and 41 or 40, x*TILE_SIZE, y*TILE_SIZE + bounce)
+            palt(0,false)
+          end
+
+        elseif col==COL_BLUE then
+          -- draw end
+          spr((flicker or dim) and 24 or 21, x*TILE_SIZE, y*TILE_SIZE)
+          -- draw edge?
+          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)        
         end
       end
     end

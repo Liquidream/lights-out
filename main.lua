@@ -8,8 +8,12 @@
 
 ## IDEAS
   • New mechanics
+    - Keys to unlock other tile areas
+    - On/Off tile (alternates being there or "thin air") 
+    - Moving tiles?
+    - Visited path crumbles behind you (fast paced!)
   • New tile cols/shapes (for diff zones)
-  • 
+  • Ne 
   • 
 
 ## DONE
