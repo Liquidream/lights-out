@@ -19,9 +19,17 @@ with the... **LIGHTS OUT**!💡
 
   end)
 
-
-  
--- TODO: Sort the table by score+deaths, reverse order
+  -- DEBUG: Allow level selection in debug
+  if DEBUG_MODE then
+    ui.section("🐞 === DEBUG MENU === 🤫",  { defaultOpen = true }, function()
+    
+      ui.numberInput("Warp to Level", storage.currLevel, { min=1, max=MAX_LEVELS, onChange=function(value)
+        -- Level jump
+        storage.currLevel = value
+        init_level()
+      end })
+    end)
+  end
 
   ui.section("Global High Score", function()
     local scoreTable = [[
