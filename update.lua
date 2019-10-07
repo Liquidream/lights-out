@@ -189,18 +189,18 @@ function checkTile()
       log("temp light already used!")      
     end
   
-  elseif player.tileCol == COL_KEY_BLUE then
+  elseif player.tileCol == COL_KEY_PINK then
     -- collect blue key (if not already)
-    if not player.gotBlueKey then
-      player.gotBlueKey = true
+    if not player.gotKey then
+      player.gotKey = true
       -- play collect sfx
       -- Sounds.win:seek(25500,"samples")  -- temp SFX
       -- Sounds.win:play()                 --
       Sounds.collect:play()
     end
 
-  elseif player.tileCol == COL_BLUE
-   and player.gotBlueKey then
+  elseif player.tileCol == COL_PINK
+   and player.gotKey then
     -- player found blue path AND has blue
     log("valid move")
 

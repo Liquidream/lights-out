@@ -75,7 +75,7 @@ function draw_level()
       -- handle level data
       if lightTime < MAX_LIGHT_DURATION
        or player.tileHistory[x..","..y]
-       or col==COL_KEY_BLUE
+       or col==COL_KEY_PINK
        then
         -- is tile still "lighting up"?
         local dim = false
@@ -92,7 +92,7 @@ function draw_level()
         end
         if col==COL_START then
           -- draw start
-          spr(0, x*TILE_SIZE, y*TILE_SIZE)
+          spr(0, x*TILE_SIZE, y*TILE_SIZE) 
           -- draw edge?
           spr(10, x*TILE_SIZE, (y+1)*TILE_SIZE)
 
@@ -100,39 +100,39 @@ function draw_level()
           -- draw end
           spr((flicker or dim) and 5 or 2, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
-          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)
+          spr((flicker or dim) and 15 or 12, x*TILE_SIZE, (y+1)*TILE_SIZE)
         
         elseif col==COL_PATH or col==COL_WRAP then
           -- draw path?
           spr((flicker or dim) and 4 or 1, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
-          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)
+          spr((flicker or dim) and 14 or 11, x*TILE_SIZE, (y+1)*TILE_SIZE)
 
         elseif col==COL_LIGHT then
           -- draw end
           spr((flicker or dim) and 23 or 20, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
-          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)        
+          spr((flicker or dim) and 33 or 30, x*TILE_SIZE, (y+1)*TILE_SIZE)        
 
-        elseif col==COL_KEY_BLUE then
+        elseif col==COL_KEY_PINK then
           -- draw path?
           spr(1, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
-          spr(10, x*TILE_SIZE, (y+1)*TILE_SIZE)     
+          spr(11, x*TILE_SIZE, (y+1)*TILE_SIZE)     
           -- draw key?
-          if not player.gotBlueKey then
+          if not player.gotKey then
             palt()
             local bounce = sin(t())*1.5
             line(x*TILE_SIZE+4-bounce, y*TILE_SIZE+8, x*TILE_SIZE+TILE_SIZE-3+bounce, y*TILE_SIZE+8, 41)
-            spr(40, x*TILE_SIZE, y*TILE_SIZE + bounce)
+            spr(42, x*TILE_SIZE, y*TILE_SIZE + bounce)
             palt(0,false)
           end
 
-        elseif col==COL_BLUE then
-          -- draw end
-          spr((flicker or dim) and 24 or 21, x*TILE_SIZE, y*TILE_SIZE)
+        elseif col==COL_PINK then
+          -- draw pink path
+          spr((flicker or dim) and 25 or 22, x*TILE_SIZE, y*TILE_SIZE)
           -- draw edge?
-          spr((flicker or dim) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)        
+          spr((flicker or dim) and 35 or 32, x*TILE_SIZE, (y+1)*TILE_SIZE)        
         end
       end
     end
