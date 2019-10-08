@@ -131,7 +131,7 @@ function init_player()
     idle_anim = {60},
     walk_anim_1 = {61,62,62,61},
     walk_anim_2 = {63,64,64,63},
-    fall_anim = {70,71,72,73,74,75,76},
+    fall_anim = {70,71,72,73,74,75,76,77,77,77,77,77},
     win_anim = {80,81,82,83,84,85,86},
     frame_pos = 1,
     frame_delay = 4,

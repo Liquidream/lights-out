@@ -219,7 +219,8 @@ function checkTile()
 
   -- only fade tile if first visit
   if not player.tileHistory[cx..","..cy] 
-   and not player.fell then
+  -- and not player.fell 
+  then
     player.tileHistory[cx..","..cy]=0.5
   end
   player.newX = nil

@@ -125,14 +125,19 @@ function draw_level()
             local bounce = sin(t())*1.5
             line(x*TILE_SIZE+4-bounce, y*TILE_SIZE+8, x*TILE_SIZE+TILE_SIZE-3+bounce, y*TILE_SIZE+8, 41)
             spr(42, x*TILE_SIZE, y*TILE_SIZE + bounce)
-            palt(0,false)
+            palt(0,false)          
           end
 
         elseif col==COL_PINK then
-          -- draw pink path
-          spr((flicker or dim) and 25 or 22, x*TILE_SIZE, y*TILE_SIZE)
-          -- draw edge?
-          spr((flicker or dim) and 35 or 32, x*TILE_SIZE, (y+1)*TILE_SIZE)        
+          if not player.fell then
+            -- draw pink path
+            spr((flicker or dim) and 25 or 22, x*TILE_SIZE, y*TILE_SIZE)
+            -- draw edge?
+            spr((flicker or dim) and 35 or 32, x*TILE_SIZE, (y+1)*TILE_SIZE)        
+          else
+            -- draw pink "hint" outline
+            spr((flicker or dim) and 55 or 52, x*TILE_SIZE, y*TILE_SIZE)
+          end
         end
       end
     end
