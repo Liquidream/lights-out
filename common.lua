@@ -18,7 +18,7 @@ COL_KEY_PINK = 27
 COL_PINK = 26
 
 START_LEVEL = 1
-MAX_LEVELS = 33
+MAX_LEVELS = 40
 MAX_LIGHT_DURATION = 3
 
 -- Andrew Kensler (+another black!)

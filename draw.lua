@@ -129,7 +129,7 @@ function draw_level()
           end
 
         elseif col==COL_PINK then
-          if not player.fell then
+          if (not player.fell or player.gotKey) then
             -- draw pink path
             spr((flicker or dim) and 25 or 22, x*TILE_SIZE, y*TILE_SIZE)
             -- draw edge?
