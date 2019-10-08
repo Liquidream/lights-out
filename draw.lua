@@ -136,7 +136,9 @@ function draw_level()
             spr((flicker or dim) and 35 or 32, x*TILE_SIZE, (y+1)*TILE_SIZE)        
           else
             -- draw pink "hint" outline
+            palt()
             spr((flicker or dim) and 55 or 52, x*TILE_SIZE, y*TILE_SIZE)
+            palt(0,false)
           end
         end
       end
