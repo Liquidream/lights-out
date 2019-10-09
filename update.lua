@@ -223,12 +223,18 @@ function checkTile()
     log("valid move")
 
 
-  elseif player.tileCol == COL_PLAT_UD 
-  or player.tileCol == COL_PLAT_LR
+  elseif player.tileCol == COL_PLAT_UD1 
+   or player.tileCol == COL_PLAT_UD2 
+   or player.tileCol == COL_PLAT_LR1
+   or player.tileCol == COL_PLAT_LR2
   and (phaseTime > fadeInStart
-  and phaseTime < fadeOutEnd) then
+    and phaseTime < fadeOutEnd) 
+  and (((player.tileCol == COL_PLAT_LR1 or player.tileCol == COL_PLAT_UD1) and pos_offset==0) 
+    or ((player.tileCol == COL_PLAT_LR2 or player.tileCol == COL_PLAT_UD2) and pos_offset==1))
+  then
       -- "phase" platform?
       log("valid move")
+      log("pos_offset: "..pos_offset)
 
   else
     -- player fell

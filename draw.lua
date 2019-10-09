@@ -76,8 +76,8 @@ function draw_level()
       if lightTime < MAX_LIGHT_DURATION
        or player.tileHistory[x..","..y]
        or col==COL_KEY_PINK
-       or col==COL_PLAT_UD
-       or col==COL_PLAT_LR
+       or col==COL_PLAT_UD1
+       or col==COL_PLAT_LR1
        then
         -- is tile still "lighting up"?
         local dim = false
@@ -143,14 +143,14 @@ function draw_level()
             palt(0,false)
           end
 
-        elseif col==COL_PLAT_UD 
-         or col==COL_PLAT_LR then
+        elseif col==COL_PLAT_UD1 
+         or col==COL_PLAT_LR1 then
           -- draw "phase" platform?
           local phaseDuration = 3
           local fadeDuration = .15
           local pos_offset = flr( t() % (phaseDuration*2) / phaseDuration )
-          local ypos_offset = (col==COL_PLAT_UD) and pos_offset or 0
-          local xpos_offset = (col==COL_PLAT_LR) and pos_offset or 0
+          local ypos_offset = (col==COL_PLAT_UD1) and pos_offset or 0
+          local xpos_offset = (col==COL_PLAT_LR1) and pos_offset or 0
           
           local phaseTime = t()%phaseDuration
           local fadeInStart = 2*fadeDuration
