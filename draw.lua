@@ -76,6 +76,8 @@ function draw_level()
       if lightTime < MAX_LIGHT_DURATION
        or player.tileHistory[x..","..y]
        or col==COL_KEY_PINK
+       or col==COL_PLAT_UD
+       or col==COL_PLAT_LR
        then
         -- is tile still "lighting up"?
         local dim = false
@@ -140,7 +142,32 @@ function draw_level()
             spr((flicker or dim) and 55 or 52, x*TILE_SIZE, y*TILE_SIZE)
             palt(0,false)
           end
+
+        elseif col==COL_PLAT_UD 
+         or col==COL_PLAT_LR then
+          -- draw up/down platform?
+          local phaseDuration = 3
+          local fadeDuration = .2
+          local pos_offset = flr( t() % (phaseDuration*2) / phaseDuration )
+          local ypos_offset = (col==COL_PLAT_UD) and pos_offset or 0
+          local xpos_offset = (col==COL_PLAT_LR) and pos_offset or 0
+          
+          local phaseTime = t()%phaseDuration
+          local fadeInStart = 2*fadeDuration
+          local fadeInEnd = fadeInStart + fadeDuration
+          local fadeOutStart = phaseDuration - (2*fadeDuration)
+          local fadeOutEnd = phaseDuration - fadeDuration
+          local fading = phaseTime > fadeInStart and phaseTime < fadeInEnd
+                       or phaseTime > fadeOutStart and phaseTime < fadeOutEnd
+          if phaseTime > fadeInStart
+           and phaseTime < fadeOutEnd then
+            spr(fading and 27 or 26, (x+xpos_offset)*TILE_SIZE, (y+ypos_offset)*TILE_SIZE)
+            -- draw edge?
+            spr(fading and 37 or 36, (x+xpos_offset)*TILE_SIZE, (y+1+ypos_offset)*TILE_SIZE)  
+          end
+
         end
+
       end
     end
   end

@@ -4,19 +4,22 @@
 -- (originally for #LOWREZJAM 2019)
 
 ## TODO's
+  • New mechanics
+  - On/Off / Moving tile (alternates being there or "thin air") 
   • 
-
+  
 ## IDEAS
   • New mechanics
-    - Keys to unlock other tile areas
-    - On/Off tile (alternates being there or "thin air") 
-    - Moving tiles?
-    - Visited path crumbles behind you (fast paced!)
-  • New tile cols/shapes (for diff zones)
-  • Ne 
-  • 
-
+  - Visited path crumbles behind you (fast paced!)
+  • Splash screen
+  • Title screen 
+  - Just use Level 1, rolling demo, with Title logo
+  
+  
 ## DONE
+  • New mechanics
+    - Keys to unlock other tile areas
+  • New tile cols/shapes (for diff zones)
 - • Instructions (not really needed - as sidebar intro covers it)
 - • Global high-score
     • Have a global high score table for 
