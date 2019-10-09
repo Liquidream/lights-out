@@ -159,6 +159,24 @@ function checkTile()
   log("...checkTile ("..cx+lvl_xoffset..","..cy+lvl_yoffset..") = "..player.tileCol)
   log("player pos = "..player.x..","..player.y)
 
+  -- "phase" platform?
+  local phaseDuration = 3
+  local fadeDuration = .15
+  local pos_offset = flr( t() % (phaseDuration*2) / phaseDuration )
+  
+  local phaseTime = t()%phaseDuration
+  local fadeInStart = 2*fadeDuration
+  local fadeInEnd = fadeInStart + fadeDuration
+  local fadeOutStart = phaseDuration - (2*fadeDuration)
+  local fadeOutEnd = phaseDuration - fadeDuration
+  local fading = phaseTime > fadeInStart and phaseTime < fadeInEnd
+               or phaseTime > fadeOutStart and phaseTime < fadeOutEnd
+
+  log("fading="..tostring(fading))
+  log("phaseTime="..tostring(phaseTime))
+  log("fadeInStart="..tostring(fadeInStart))
+  log("fadeOutEnd="..tostring(fadeOutEnd))
+
   if player.tileCol == COL_START then
     -- player on start
     -- do nothing
@@ -203,6 +221,14 @@ function checkTile()
    and player.gotKey then
     -- player found blue path AND has blue
     log("valid move")
+
+
+  elseif player.tileCol == COL_PLAT_UD 
+  or player.tileCol == COL_PLAT_LR
+  and (phaseTime > fadeInStart
+  and phaseTime < fadeOutEnd) then
+      -- "phase" platform?
+      log("valid move")
 
   else
     -- player fell

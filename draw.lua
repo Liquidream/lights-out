@@ -145,9 +145,9 @@ function draw_level()
 
         elseif col==COL_PLAT_UD 
          or col==COL_PLAT_LR then
-          -- draw up/down platform?
+          -- draw "phase" platform?
           local phaseDuration = 3
-          local fadeDuration = .2
+          local fadeDuration = .15
           local pos_offset = flr( t() % (phaseDuration*2) / phaseDuration )
           local ypos_offset = (col==COL_PLAT_UD) and pos_offset or 0
           local xpos_offset = (col==COL_PLAT_LR) and pos_offset or 0
