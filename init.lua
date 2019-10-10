@@ -1,5 +1,7 @@
 local Sounds = require 'sounds'
 
+_t=0
+
 function init_sugarcoat()
   init_sugar("Lights-Out", GAME_WIDTH, GAME_HEIGHT, GAME_SCALE)
   
@@ -137,7 +139,7 @@ function init_player()
     frame_delay = 4,
     frame_count = 0,
     moving = false,
-    moveFrameCount = 0,
+    moveFrameCount = nil,
     tileHistory={},
     moveCount = 0, -- number of moves player has made
   }

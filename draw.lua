@@ -76,8 +76,8 @@ function draw_level()
       if lightTime < MAX_LIGHT_DURATION
        or player.tileHistory[x..","..y]
        or col==COL_KEY_PINK
-       or col==COL_PLAT_UD1
-       or col==COL_PLAT_LR1
+       or col==COL_PLATFORM1
+       or col==COL_PLATFORM2
        then
         -- is tile still "lighting up"?
         local dim = false
@@ -143,27 +143,25 @@ function draw_level()
             palt(0,false)
           end
 
-        elseif col==COL_PLAT_UD1 
-         or col==COL_PLAT_LR1 then
+        elseif col==COL_PLATFORM1 
+         or col==COL_PLATFORM2 then
           -- draw "phase" platform?
-          local phaseDuration = 3
+          local phaseDuration = 6
           local fadeDuration = .15
-          local pos_offset = flr( t() % (phaseDuration*2) / phaseDuration )
-          local ypos_offset = (col==COL_PLAT_UD1) and pos_offset or 0
-          local xpos_offset = (col==COL_PLAT_LR1) and pos_offset or 0
+          local phaseoffset = (col==COL_PLATFORM2) and (phaseDuration/2) or 0
           
-          local phaseTime = t()%phaseDuration
-          local fadeInStart = 2*fadeDuration
+          local phaseTime = (t()+phaseoffset)%phaseDuration
+          local fadeInStart = fadeDuration
           local fadeInEnd = fadeInStart + fadeDuration
-          local fadeOutStart = phaseDuration - (2*fadeDuration)
-          local fadeOutEnd = phaseDuration - fadeDuration
+          local fadeOutStart = (phaseDuration/2) - (2*fadeDuration)
+          local fadeOutEnd = (phaseDuration/2) - fadeDuration
           local fading = phaseTime > fadeInStart and phaseTime < fadeInEnd
                        or phaseTime > fadeOutStart and phaseTime < fadeOutEnd
           if phaseTime > fadeInStart
            and phaseTime < fadeOutEnd then
-            spr(fading and 27 or 26, (x+xpos_offset)*TILE_SIZE, (y+ypos_offset)*TILE_SIZE)
+            spr(fading and 27 or 26, x*TILE_SIZE, y*TILE_SIZE)
             -- draw edge?
-            spr(fading and 37 or 36, (x+xpos_offset)*TILE_SIZE, (y+1+ypos_offset)*TILE_SIZE)  
+            spr(fading and 37 or 36, x*TILE_SIZE, (y+1)*TILE_SIZE)  
           end
 
         end

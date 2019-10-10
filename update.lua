@@ -3,7 +3,7 @@ local Sounds = require 'sounds'
 --tweetCounter=0
 
 function update_game(dt)
-
+  _t=_t+1
   -- temp tweet code
   -- tweetCounter = tweetCounter + 1
   -- if tweetCounter>25 then
@@ -114,26 +114,36 @@ function update_player(dt)
   end
 
   -- update player move "tweening" frames
-  if player.moveFrameCount > 0 then
+  if player.moveFrameCount then
     player.x = player.x + player.dx
     player.y = player.y + player.dy
     player.moveFrameCount = player.moveFrameCount - 1
     -- reached new pos?
     if player.moveFrameCount <= 0 then
+      player.moveFrameCount = nil
       player.moving = false
       player.x = player.newX
+      log("player.newX="..tostring(player.newX))
       player.y = player.newY
       player.tx = player.x/TILE_SIZE
       player.ty = player.y/TILE_SIZE
       init_anim(player, player.idle_anim)
       checkTile()
+
+      player.newX = nil
+      player.newY = nil
+      player.wrapX = nil
+      player.wrapY = nil
     end    
   end
 
-  -- keep player within the screen
-  -- TODO: update this later, when allow "wrapping"
-  -- player.x = mid(0,player.x,56)
-  -- player.y = mid(0,player.y,56)
+  -- also check player's tile status regularly
+  -- (as now possible for tile to change!)
+  if _t%5==0 
+   and not player.moveFrameCount
+   and not player.fell then 
+      checkTile() 
+  end
 
   -- update player animation
   update_anim(player)
@@ -156,26 +166,26 @@ function checkTile()
   local cx = player.tx>0 and player.tx or 0
   local cy = player.ty>0 and player.ty or 0
   player.tileCol = sget(cx+lvl_xoffset,cy+lvl_yoffset,"levels")
-  log("...checkTile ("..cx+lvl_xoffset..","..cy+lvl_yoffset..") = "..player.tileCol)
-  log("player pos = "..player.x..","..player.y)
+  -- log("...checkTile ("..cx+lvl_xoffset..","..cy+lvl_yoffset..") = "..player.tileCol)
+  -- log("player pos = "..player.x..","..player.y)
 
   -- "phase" platform?
-  local phaseDuration = 3
+  local phaseDuration = 6
   local fadeDuration = .15
-  local pos_offset = flr( t() % (phaseDuration*2) / phaseDuration )
+  local phaseoffset = (player.tileCol==COL_PLATFORM2) and (phaseDuration/2) or 0
   
-  local phaseTime = t()%phaseDuration
-  local fadeInStart = 2*fadeDuration
+  local phaseTime = (t()+phaseoffset)%phaseDuration
+  local fadeInStart = fadeDuration
   local fadeInEnd = fadeInStart + fadeDuration
-  local fadeOutStart = phaseDuration - (2*fadeDuration)
-  local fadeOutEnd = phaseDuration - fadeDuration
+  local fadeOutStart = (phaseDuration/2) - (2*fadeDuration)
+  local fadeOutEnd = (phaseDuration/2) - fadeDuration
   local fading = phaseTime > fadeInStart and phaseTime < fadeInEnd
-               or phaseTime > fadeOutStart and phaseTime < fadeOutEnd
+               or phaseTime > fadeOutStart and phaseTime < fadeOutEnd  
 
-  log("fading="..tostring(fading))
-  log("phaseTime="..tostring(phaseTime))
-  log("fadeInStart="..tostring(fadeInStart))
-  log("fadeOutEnd="..tostring(fadeOutEnd))
+  -- log("fading="..tostring(fading))
+  -- log("phaseTime="..tostring(phaseTime))
+  -- log("fadeInStart="..tostring(fadeInStart))
+  -- log("fadeOutEnd="..tostring(fadeOutEnd))
 
   if player.tileCol == COL_START then
     -- player on start
@@ -223,26 +233,25 @@ function checkTile()
     log("valid move")
 
 
-  elseif player.tileCol == COL_PLAT_UD1 
-   or player.tileCol == COL_PLAT_UD2 
-   or player.tileCol == COL_PLAT_LR1
-   or player.tileCol == COL_PLAT_LR2
+  elseif (player.tileCol == COL_PLATFORM1 
+   or player.tileCol == COL_PLATFORM2)
   and (phaseTime > fadeInStart
-    and phaseTime < fadeOutEnd) 
-  and (((player.tileCol == COL_PLAT_LR1 or player.tileCol == COL_PLAT_UD1) and pos_offset==0) 
-    or ((player.tileCol == COL_PLAT_LR2 or player.tileCol == COL_PLAT_UD2) and pos_offset==1))
+    and phaseTime < fadeOutEnd)
   then
       -- "phase" platform?
       log("valid move")
-      log("pos_offset: "..pos_offset)
+      -- log("pos_offset: "..phaseoffset)
+      -- log("phaseTime > fadeInStart: "..tostring(phaseTime > fadeInStart))
+      -- log("phaseTime < fadeOutEnd: "..tostring(phaseTime < fadeOutEnd))
 
   else
     -- player fell
     log("player fell!")
+    player.fell = true
+    player.moveFrameCount = null
     Sounds.fall:play()
     storage.currDeaths = storage.currDeaths + 1
     saveProgress()
-    player.fell = true
     init_anim(player, player.fall_anim, function(self)
       -- restart level
       init_level()
@@ -255,10 +264,11 @@ function checkTile()
   then
     player.tileHistory[cx..","..cy]=0.5
   end
-  player.newX = nil
-  player.newY = nil
-  player.wrapX = nil
-  player.wrapY = nil
+  -- MOVED: Now only clear these after completing a move!
+  -- player.newX = nil
+  -- player.newY = nil
+  -- player.wrapX = nil
+  -- player.wrapY = nil
 end
 
 -- step through (and loop) animations
