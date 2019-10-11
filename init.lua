@@ -141,6 +141,7 @@ function init_player()
     moving = false,
     moveFrameCount = nil,
     tileHistory={},
+    tileHistoryKeys={},
     moveCount = 0, -- number of moves player has made
   }
   player.curr_anim = player.idle_anim

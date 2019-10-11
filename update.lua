@@ -145,6 +145,15 @@ function update_player(dt)
       checkTile() 
   end
 
+  -- TEST: crumbling trail
+  if _t>5*60 and _t%60==0 and #player.tileHistoryKeys>0 then
+    -- remove trail one-by-one
+    log("remove!!")
+    local key = player.tileHistoryKeys[1]
+    player.tileHistory[key] = nil
+    table.remove( player.tileHistoryKeys, 1)
+  end
+
   -- update player animation
   update_anim(player)
 
@@ -258,11 +267,22 @@ function checkTile()
     end)
   end
 
+  -- -------------------------------
+  -- tile history states
+  -- -------------------------------
+  -- nil  = never visited
+  -- 0.5  = fading up
+  -- 1    = lit
+  -- -0.5 = fading down (crumbling path)
+  --  0   = gone (player will fall)
+
   -- only fade tile if first visit
-  if not player.tileHistory[cx..","..cy] 
+  local key = cx..","..cy
+  if not player.tileHistory[key] 
   -- and not player.fell 
   then
-    player.tileHistory[cx..","..cy]=0.5
+    player.tileHistory[key] = 0.5
+    table.insert( player.tileHistoryKeys, key ) 
   end
   -- MOVED: Now only clear these after completing a move!
   -- player.newX = nil
