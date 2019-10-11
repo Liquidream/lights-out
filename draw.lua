@@ -87,14 +87,21 @@ function draw_level()
           -- is tile still "lighting up"?
           local dim = false
           
-          if player.tileHistory[x..","..y]
-          and player.tileHistory[x..","..y]<1 
-          then
-            player.tileHistory[x..","..y] 
-              = min(player.tileHistory[x..","..y]+0.1, 1)
+          if player.tileHistory[x..","..y] then
+            if player.tileHistory[x..","..y] > 0 
+             and player.tileHistory[x..","..y] < 1 then
+              -- fading up
+              player.tileHistory[x..","..y] 
+                = min(player.tileHistory[x..","..y]+0.1, 1)
               -- only dim if lights aren't "on"
               if lightTime > MAX_LIGHT_DURATION then
+                dim = true
+              end
+            elseif  player.tileHistory[x..","..y] < 0 then
+              -- fading down
               dim = true
+              player.tileHistory[x..","..y] 
+                = min(player.tileHistory[x..","..y]+0.05, 0)
             end
           end
           if col==COL_START then

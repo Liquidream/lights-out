@@ -148,7 +148,7 @@ function update_player(dt)
   if _t>5*60 and _t%120==0 and (#player.tileHistoryKeys>0 and player.moved) then
     -- remove trail one-by-one
     local key = player.tileHistoryKeys[1]
-    player.tileHistory[key]=0
+    player.tileHistory[key] = -0.5
     --player.tileHistory[key] = nil
     table.remove( player.tileHistoryKeys, 1)
   end
@@ -197,7 +197,8 @@ function checkTile()
   -- log("fadeInStart="..tostring(fadeInStart))
   -- log("fadeOutEnd="..tostring(fadeOutEnd))
 
-  if player.tileCol == COL_START then
+  if player.tileCol == COL_START
+    and not deadTile then
     -- player on start
     -- do nothing
   elseif player.tileCol == COL_FINISH then
@@ -289,11 +290,6 @@ function checkTile()
     player.tileHistory[key] = 0.5
     table.insert( player.tileHistoryKeys, key )    
   end
-  -- MOVED: Now only clear these after completing a move!
-  -- player.newX = nil
-  -- player.newY = nil
-  -- player.wrapX = nil
-  -- player.wrapY = nil
 end
 
 -- step through (and loop) animations
