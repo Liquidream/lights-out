@@ -123,7 +123,6 @@ function update_player(dt)
       player.moveFrameCount = nil
       player.moving = false
       player.x = player.newX
-      log("player.newX="..tostring(player.newX))
       player.y = player.newY
       player.tx = player.x/TILE_SIZE
       player.ty = player.y/TILE_SIZE
@@ -146,11 +145,11 @@ function update_player(dt)
   end
 
   -- TEST: crumbling trail
-  if _t>5*60 and _t%60==0 and #player.tileHistoryKeys>0 then
+  if _t>5*60 and _t%120==0 and (#player.tileHistoryKeys>0 and player.moved) then
     -- remove trail one-by-one
-    log("remove!!")
     local key = player.tileHistoryKeys[1]
-    player.tileHistory[key] = nil
+    player.tileHistory[key]=0
+    --player.tileHistory[key] = nil
     table.remove( player.tileHistoryKeys, 1)
   end
 
@@ -169,7 +168,7 @@ end
 
 -- check the tile the player is now on
 function checkTile()
-  log("in checkTile...")
+  --log("in checkTile...")
   local lvl_xoffset = ((storage.currLevel-1)%10*8)
   local lvl_yoffset = flr((storage.currLevel-1)/10)*8
   local cx = player.tx>0 and player.tx or 0
@@ -177,6 +176,8 @@ function checkTile()
   player.tileCol = sget(cx+lvl_xoffset,cy+lvl_yoffset,"levels")
   -- log("...checkTile ("..cx+lvl_xoffset..","..cy+lvl_yoffset..") = "..player.tileCol)
   -- log("player pos = "..player.x..","..player.y)
+  local key = cx..","..cy
+  local deadTile = player.tileHistory[key] and player.tileHistory[key]==0
 
   -- "phase" platform?
   local phaseDuration = 6
@@ -201,7 +202,7 @@ function checkTile()
     -- do nothing
   elseif player.tileCol == COL_FINISH then
     -- player reached end
-    log("- level complete -")
+   -- log("- level complete -")
     Sounds.win:play()
     Sounds.music:stop()
     player.win_time = game_time
@@ -210,23 +211,26 @@ function checkTile()
     player.angle = 0.25
     init_anim(player, player.win_anim)
 
-  elseif player.tileCol == COL_PATH 
-   or player.tileCol==COL_WRAP then
+  elseif (player.tileCol == COL_PATH 
+   or player.tileCol==COL_WRAP)
+   and not deadTile then
     -- player found path (valid movement)
-    log("valid move")
+    --log("valid move")
 
-  elseif player.tileCol == COL_LIGHT then
+  elseif player.tileCol == COL_LIGHT
+   and not deadTile then
     -- light up (if not already used)
-    if not player.tileHistory[cx..","..cy] then
-      log("temp light on")
+    if not player.tileHistory[key] then
+     -- log("temp light on")
       light_start = love.timer.getTime()
       -- Added sound to make it significant
       Sounds.startLevel:play()
     else
-      log("temp light already used!")      
+     -- log("temp light already used!")      
     end
   
-  elseif player.tileCol == COL_KEY_PINK then
+  elseif player.tileCol == COL_KEY_PINK
+   and not deadTile then
     -- collect blue key (if not already)
     if not player.gotKey then
       player.gotKey = true
@@ -237,18 +241,20 @@ function checkTile()
     end
 
   elseif player.tileCol == COL_PINK
-   and player.gotKey then
+   and player.gotKey
+   and not deadTile then
     -- player found blue path AND has blue
-    log("valid move")
+   -- log("valid move")
 
 
   elseif (player.tileCol == COL_PLATFORM1 
    or player.tileCol == COL_PLATFORM2)
   and (phaseTime > fadeInStart
     and phaseTime < fadeOutEnd)
+  and not deadTile
   then
       -- "phase" platform?
-      log("valid move")
+      --log("valid move")
       -- log("pos_offset: "..phaseoffset)
       -- log("phaseTime > fadeInStart: "..tostring(phaseTime > fadeInStart))
       -- log("phaseTime < fadeOutEnd: "..tostring(phaseTime < fadeOutEnd))
@@ -276,13 +282,12 @@ function checkTile()
   -- -0.5 = fading down (crumbling path)
   --  0   = gone (player will fall)
 
-  -- only fade tile if first visit
-  local key = cx..","..cy
+  -- only fade tile if first visit  
   if not player.tileHistory[key] 
   -- and not player.fell 
   then
     player.tileHistory[key] = 0.5
-    table.insert( player.tileHistoryKeys, key ) 
+    table.insert( player.tileHistoryKeys, key )    
   end
   -- MOVED: Now only clear these after completing a move!
   -- player.newX = nil

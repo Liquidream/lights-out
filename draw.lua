@@ -65,109 +65,116 @@ function draw_level()
    and (segment>=.8 and segment<=1)  
 
    
-  -- place level tiles, based on pixels  
-  palt(0,false)
-  local lvl_xoffset = ((storage.currLevel-1)%10*8)
-  local lvl_yoffset = flr((storage.currLevel-1)/10)*8
-  for x=0,7 do
+   
+   -- place level tiles, based on pixels  
+   palt(0,false)
+   local lvl_xoffset = ((storage.currLevel-1)%10*8)
+   local lvl_yoffset = flr((storage.currLevel-1)/10)*8
+   for x=0,7 do
     for y=0,7 do
       local col=sget(x+lvl_xoffset, y+lvl_yoffset, "levels")
-      -- handle level data
-      if lightTime < MAX_LIGHT_DURATION
-       or player.tileHistory[x..","..y]
-       or col==COL_KEY_PINK
-       or col==COL_PLATFORM1
-       or col==COL_PLATFORM2
-       then
-        -- is tile still "lighting up"?
-        local dim = false
-        
-        if player.tileHistory[x..","..y]
-         and player.tileHistory[x..","..y]<1 
+      local key = x..","..y
+      local deadTile = player.tileHistory[key] and player.tileHistory[key]==0
+      
+      if not deadTile then 
+        -- handle level data
+        if lightTime < MAX_LIGHT_DURATION
+        or player.tileHistory[x..","..y]
+        or col==COL_KEY_PINK
+        or col==COL_PLATFORM1
+        or col==COL_PLATFORM2
         then
-          player.tileHistory[x..","..y] 
-            = min(player.tileHistory[x..","..y]+0.1, 1)
-            -- only dim if lights aren't "on"
-            if lightTime > MAX_LIGHT_DURATION then
-            dim = true
-          end
-        end
-        if col==COL_START then
-          -- draw start
-          spr(0, x*TILE_SIZE, y*TILE_SIZE) 
-          -- draw edge?
-          spr(10, x*TILE_SIZE, (y+1)*TILE_SIZE)
-
-        elseif col==COL_FINISH then
-          -- draw end
-          spr((flicker or dim) and 5 or 2, x*TILE_SIZE, y*TILE_SIZE)
-          -- draw edge?
-          spr((flicker or dim) and 15 or 12, x*TILE_SIZE, (y+1)*TILE_SIZE)
-        
-        elseif col==COL_PATH or col==COL_WRAP then
-          -- draw path?
-          spr((flicker or dim) and 4 or 1, x*TILE_SIZE, y*TILE_SIZE)
-          -- draw edge?
-          spr((flicker or dim) and 14 or 11, x*TILE_SIZE, (y+1)*TILE_SIZE)
-
-        elseif col==COL_LIGHT then
-          -- draw end
-          spr((flicker or dim) and 23 or 20, x*TILE_SIZE, y*TILE_SIZE)
-          -- draw edge?
-          spr((flicker or dim) and 33 or 30, x*TILE_SIZE, (y+1)*TILE_SIZE)        
-
-        elseif col==COL_KEY_PINK then
-          -- draw path?
-          spr(1, x*TILE_SIZE, y*TILE_SIZE)
-          -- draw edge?
-          spr(11, x*TILE_SIZE, (y+1)*TILE_SIZE)     
-          -- draw key?
-          if not player.gotKey then
-            palt()
-            local bounce = sin(t())*1.5
-            line(x*TILE_SIZE+4-bounce, y*TILE_SIZE+8, x*TILE_SIZE+TILE_SIZE-3+bounce, y*TILE_SIZE+8, 41)
-            spr(42, x*TILE_SIZE, y*TILE_SIZE + bounce)
-            palt(0,false)          
-          end
-
-        elseif col==COL_PINK then
-          if (not player.fell or player.gotKey) then
-            -- draw pink path
-            spr((flicker or dim) and 25 or 22, x*TILE_SIZE, y*TILE_SIZE)
-            -- draw edge?
-            spr((flicker or dim) and 35 or 32, x*TILE_SIZE, (y+1)*TILE_SIZE)        
-          else
-            -- draw pink "hint" outline
-            palt()
-            spr((flicker or dim) and 55 or 52, x*TILE_SIZE, y*TILE_SIZE)
-            palt(0,false)
-          end
-
-        elseif col==COL_PLATFORM1 
-         or col==COL_PLATFORM2 then
-          -- draw "phase" platform?
-          local phaseDuration = 6
-          local fadeDuration = .15
-          local phaseoffset = (col==COL_PLATFORM2) and (phaseDuration/2) or 0
+          -- is tile still "lighting up"?
+          local dim = false
           
-          local phaseTime = (t()+phaseoffset)%phaseDuration
-          local fadeInStart = fadeDuration
-          local fadeInEnd = fadeInStart + fadeDuration
-          local fadeOutStart = (phaseDuration/2) - (2*fadeDuration)
-          local fadeOutEnd = (phaseDuration/2) - fadeDuration
-          local fading = phaseTime > fadeInStart and phaseTime < fadeInEnd
-                       or phaseTime > fadeOutStart and phaseTime < fadeOutEnd
-          if phaseTime > fadeInStart
-           and phaseTime < fadeOutEnd then
-            spr(fading and 27 or 26, x*TILE_SIZE, y*TILE_SIZE)
+          if player.tileHistory[x..","..y]
+          and player.tileHistory[x..","..y]<1 
+          then
+            player.tileHistory[x..","..y] 
+              = min(player.tileHistory[x..","..y]+0.1, 1)
+              -- only dim if lights aren't "on"
+              if lightTime > MAX_LIGHT_DURATION then
+              dim = true
+            end
+          end
+          if col==COL_START then
+            -- draw start
+            spr(0, x*TILE_SIZE, y*TILE_SIZE) 
             -- draw edge?
-            spr(fading and 37 or 36, x*TILE_SIZE, (y+1)*TILE_SIZE)  
+            spr(10, x*TILE_SIZE, (y+1)*TILE_SIZE)
+
+          elseif col==COL_FINISH then
+            -- draw end
+            spr((flicker or dim) and 5 or 2, x*TILE_SIZE, y*TILE_SIZE)
+            -- draw edge?
+            spr((flicker or dim) and 15 or 12, x*TILE_SIZE, (y+1)*TILE_SIZE)
+          
+          elseif col==COL_PATH or col==COL_WRAP then
+            -- draw path?
+            spr((flicker or dim) and 4 or 1, x*TILE_SIZE, y*TILE_SIZE)
+            -- draw edge?
+            spr((flicker or dim) and 14 or 11, x*TILE_SIZE, (y+1)*TILE_SIZE)
+
+          elseif col==COL_LIGHT then
+            -- draw end
+            spr((flicker or dim) and 23 or 20, x*TILE_SIZE, y*TILE_SIZE)
+            -- draw edge?
+            spr((flicker or dim) and 33 or 30, x*TILE_SIZE, (y+1)*TILE_SIZE)        
+
+          elseif col==COL_KEY_PINK then
+            -- draw path?
+            spr(1, x*TILE_SIZE, y*TILE_SIZE)
+            -- draw edge?
+            spr(11, x*TILE_SIZE, (y+1)*TILE_SIZE)     
+            -- draw key?
+            if not player.gotKey then
+              palt()
+              local bounce = sin(t())*1.5
+              line(x*TILE_SIZE+4-bounce, y*TILE_SIZE+8, x*TILE_SIZE+TILE_SIZE-3+bounce, y*TILE_SIZE+8, 41)
+              spr(42, x*TILE_SIZE, y*TILE_SIZE + bounce)
+              palt(0,false)          
+            end
+
+          elseif col==COL_PINK then
+            if (not player.fell or player.gotKey) then
+              -- draw pink path
+              spr((flicker or dim) and 25 or 22, x*TILE_SIZE, y*TILE_SIZE)
+              -- draw edge?
+              spr((flicker or dim) and 35 or 32, x*TILE_SIZE, (y+1)*TILE_SIZE)        
+            else
+              -- draw pink "hint" outline
+              palt()
+              spr((flicker or dim) and 55 or 52, x*TILE_SIZE, y*TILE_SIZE)
+              palt(0,false)
+            end
+
+          elseif col==COL_PLATFORM1 
+          or col==COL_PLATFORM2 then
+            -- draw "phase" platform?
+            local phaseDuration = 6
+            local fadeDuration = .15
+            local phaseoffset = (col==COL_PLATFORM2) and (phaseDuration/2) or 0
+            
+            local phaseTime = (t()+phaseoffset)%phaseDuration
+            local fadeInStart = fadeDuration
+            local fadeInEnd = fadeInStart + fadeDuration
+            local fadeOutStart = (phaseDuration/2) - (2*fadeDuration)
+            local fadeOutEnd = (phaseDuration/2) - fadeDuration
+            local fading = phaseTime > fadeInStart and phaseTime < fadeInEnd
+                        or phaseTime > fadeOutStart and phaseTime < fadeOutEnd
+            if phaseTime > fadeInStart
+            and phaseTime < fadeOutEnd then
+              spr(fading and 27 or 26, x*TILE_SIZE, y*TILE_SIZE)
+              -- draw edge?
+              spr(fading and 37 or 36, x*TILE_SIZE, (y+1)*TILE_SIZE)  
+            end
+
           end
 
-        end
+        end  -- if dead
 
-      end
-    end
+      end  -- for
+    end  -- for
   end
   
   palt()
