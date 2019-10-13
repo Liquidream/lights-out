@@ -178,7 +178,7 @@ function init_player_move(angle, dx, dy)
   end
 
    -- calc tween "smoothness"
-   local frames = 16 --12
+   local frames = 16 --16
    local pxDist = TILE_SIZE
    player.dx = (pxDist/frames) * dx
    player.dy = (pxDist/frames) * dy

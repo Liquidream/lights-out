@@ -104,16 +104,16 @@ function update_player(dt)
    and not player.moving
    and not player.fell then
     -- left
-    if btnp(0) then
+    if btn(0) then
       init_player_move(0.5, -1, 0)      
     end
-    if btnp(1) then         -- right
+    if btn(1) then         -- right
       init_player_move(0, 1, 0)
     end
-    if btnp(2) then         -- up
+    if btn(2) then         -- up
       init_player_move(0.75, 0, -1)
     end
-    if btnp(3) then         -- down
+    if btn(3) then         -- down
       init_player_move(0.25, 0, 1)
     end
   end
