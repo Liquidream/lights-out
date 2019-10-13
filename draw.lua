@@ -219,6 +219,9 @@ function draw_level()
 
   -- draw difficulty selection
   if storage.currLevel==1 then
+    if surface_exists("title") then
+      spr_sheet("title", 0,16) 
+    end
     pprint("EASY", 78,54, 7,5)
     pprint("HARD", 78,82, 39,31)
   end
