@@ -213,7 +213,7 @@ function draw_level()
    and not player.moved then
     -- draw "hint"
      if not alternate() then
-      spr(90, player.x + 20 + sin(t()*2)*1.1, player.y)
+      spr(90, player.x + 10 + sin(t()*2)*1.1, player.y)
      end
   end
 
@@ -222,8 +222,8 @@ function draw_level()
     if surface_exists("title") then
       spr_sheet("title", 0,16) 
     end
-    pprint("EASY", 78,54, 7,5)
-    pprint("HARD", 78,82, 39,31)
+    pprint("EASY", 70,54, 7,5)
+    pprint("HARD", 70,82, 39,31)
   end
 end
 
