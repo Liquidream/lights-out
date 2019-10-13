@@ -27,6 +27,11 @@ function update_game(dt)
     update_anim(player)
     state_time = state_time + 1
     if state_time > 100 then
+      -- is this the title screen?
+      if storage.currLevel == 1 then
+        storage.difficulty = player.y<60 and 0 or 1
+        log("storage.difficulty = "..tostring(storage.difficulty))
+      end
       saveProgress()
       levelUp()      
     end
@@ -144,12 +149,12 @@ function update_player(dt)
       checkTile() 
   end
 
-  -- TEST: crumbling trail
-  if _t>5*60 and _t%120==0 and (#player.tileHistoryKeys>0 and player.moved) then
+  -- Crumbling trail (HARD mode only)
+  if storage.difficulty>0 and
+   _t>5*60 and _t%120==0 and (#player.tileHistoryKeys>0 and player.moved) then
     -- remove trail one-by-one
     local key = player.tileHistoryKeys[1]
     player.tileHistory[key] = -0.5
-    --player.tileHistory[key] = nil
     table.remove( player.tileHistoryKeys, 1)
   end
 

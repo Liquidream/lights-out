@@ -30,6 +30,8 @@ function init_data()
   storage.getUserValue("currTime", 0)
   -- Total no. of lives lost since last reset/win  
   storage.getUserValue("currDeaths", 0)
+  -- Difficulty level (Easy/Hard)
+  storage.getUserValue("difficulty", 0)
   -- Get Global saved data
   refreshGlobalHighScores()
 end
@@ -41,6 +43,7 @@ function resetPlayerProgress()
   storage.currLevel = START_LEVEL
   storage.currTime = 0
   storage.currDeaths = 0
+  storage.difficulty = 0 -- 0=Easy, 1=Hard
   storage.saveUserValues(function()
     if gameState ~= GAME_STATE.COMPLETED then
       init_data()

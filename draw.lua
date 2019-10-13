@@ -83,6 +83,7 @@ function draw_level()
         or col==COL_KEY_PINK
         or col==COL_PLATFORM1
         or col==COL_PLATFORM2
+        or (col==COL_FINISH and storage.currLevel==1)
         then
           -- is tile still "lighting up"?
           local dim = false
@@ -112,10 +113,10 @@ function draw_level()
 
           elseif col==COL_FINISH then
             -- draw end
-            spr((flicker or dim) and 5 or 2, x*TILE_SIZE, y*TILE_SIZE)
+            spr(((flicker or dim) and storage.currLevel~=1) and 5 or 2, x*TILE_SIZE, y*TILE_SIZE)
             -- draw edge?
-            spr((flicker or dim) and 15 or 12, x*TILE_SIZE, (y+1)*TILE_SIZE)
-          
+            spr(((flicker or dim) and storage.currLevel~=1) and 15 or 12, x*TILE_SIZE, (y+1)*TILE_SIZE)
+            
           elseif col==COL_PATH or col==COL_WRAP then
             -- draw path?
             spr((flicker or dim) and 4 or 1, x*TILE_SIZE, y*TILE_SIZE)
@@ -203,7 +204,8 @@ function draw_level()
   end
 
   -- Draw UI  
-  if game_time < 100 then
+  if storage.currLevel > 1 
+   and game_time < 100 then
     pprintc("LEVEL "..storage.currLevel, 1, 47,29)
 
   elseif storage.currLevel == 1
@@ -215,9 +217,11 @@ function draw_level()
      end
   end
 
-
-  -- pprintc("TIME "..flr(storage.currTime),40, 47)  
-  -- pprintc("DEATHS "..flr(storage.currDeaths),50, 47)  
+  -- draw difficulty selection
+  if storage.currLevel==1 then
+    pprint("EASY", 78,54, 7,5)
+    pprint("HARD", 78,82, 39,31)
+  end
 end
 
 -- pprint, centered
