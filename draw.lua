@@ -107,9 +107,9 @@ function draw_level()
           end
           if col==COL_START then
             -- draw start
-            spr(0, x*TILE_SIZE, y*TILE_SIZE) 
+            spr(((flicker or dim) and player.moved) and 3 or 0, x*TILE_SIZE, y*TILE_SIZE) 
             -- draw edge?
-            spr(10, x*TILE_SIZE, (y+1)*TILE_SIZE)
+            spr(((flicker or dim) and player.moved) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)
 
           elseif col==COL_FINISH then
             -- draw end
