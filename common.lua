@@ -22,7 +22,7 @@ COL_PATH_BONUS = 44
 COL_FINISH_BONUS = 7
 
 START_LEVEL = 1
-MAX_LEVELS = 50
+MAX_LEVELS = 60
 MAX_LIGHT_DURATION = 3
 
 -- Andrew Kensler (+another black!)

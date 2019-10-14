@@ -30,7 +30,10 @@ function update_game(dt)
       -- is this the title screen?
       if storage.currLevel == 1 then
         storage.difficulty = player.y<60 and 0 or 1
-        log("storage.difficulty = "..tostring(storage.difficulty))
+        log("storage.difficulty = "..tostring(storage.difficulty))        
+        -- set game mode (normal/reverse)      
+        storage.gameMode = player.y<30 and 1 or 0
+        log("storage.gameMode = "..storage.gameMode)
       end
       saveProgress()
       levelUp()      
@@ -221,9 +224,6 @@ function checkTile()
     state_time = 0
     player.angle = 0.25
     init_anim(player, player.win_anim)
-    -- set game mode (normal/reverse)
-    storage.gameMode = player.y<30 and 1 or 0
-    log("storage.gameMode = "..storage.gameMode)
 
   elseif (player.tileCol == COL_PATH 
    or player.tileCol==COL_WRAP
