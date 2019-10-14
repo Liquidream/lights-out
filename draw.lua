@@ -48,7 +48,7 @@ function draw_level()
 
   -- still loading?
   if not levelReady then
-    pprintc("  LOADING... ", 20, 46,5)
+    pprintc("  LOADING... ", 45, 46,5)
     -- abort now!
     return
   end
@@ -220,14 +220,21 @@ function draw_level()
   -- draw difficulty selection
   if storage.currLevel==1 then
     if surface_exists("title") then
-      spr_sheet("title", 0,16) 
+      spr_sheet("title", 0,0) 
     end
+    
+    pprint("EASY", 70,40, 7,5)
+    pprint("HARD", 70,68, 39,31)
+    
+    -- small font stuff
     use_font("small-font")
-    pprint("CHOOSE YOUR PATH!", 20,35, 46,5)
-
+    pprint("CHOOSE YOUR PATH!", 20,20, 46,5)
+    --if flr(t())%6 < 3 then
+      pprint(" Code + Art   Music + SFX", -2,90, 21,29)
+    --else
+      pprint("PAUL NICHOLAS  JASON RIGGS", -2,97, 18,29)
+    --end
     use_font("main-font")
-    pprint("EASY", 70,54, 7,5)
-    pprint("HARD", 70,82, 39,31)
   end
 end
 
