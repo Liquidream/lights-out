@@ -36,7 +36,7 @@ function init_data()
   -- Game Mode (Normal/Reverse)
   storage.getUserValue("gameMode", 0)
   -- Game State (Reverse mode unlocked?)
-  storage.getUserValue("reverseUnlocked", true) --false
+  storage.getUserValue("reverseUnlocked", false)
   -- Get Global saved data
   refreshGlobalHighScores()
 end
@@ -50,6 +50,7 @@ function resetPlayerProgress()
   storage.currDeaths = 0
   storage.difficulty = 0 -- 0=Easy, 1=Hard
   storage.gameMode = 0 -- 0=Normal, 1=Reverse
+  storage.reverseUnlocked = false
   storage.saveUserValues(function()
     if gameState ~= GAME_STATE.COMPLETED then
       init_data()
@@ -139,7 +140,15 @@ function load_level(lvl_num)
         -- place player at start
         player.x,player.y = x*TILE_SIZE, y*TILE_SIZE
         player.tx,player.ty = x,y
-      else
+      end
+
+      -- look for "unplayable" levels
+      if col==COL_PINK and storage.gameMode == 1 then 
+        -- skip level
+        log("skipping 'unplayable' level..."..lvl_num)
+        levelUp()
+        init_level()
+        return
       end
     end
   end

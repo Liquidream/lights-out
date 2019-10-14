@@ -28,6 +28,15 @@ with the... **LIGHTS OUT**!💡
         storage.currLevel = value
         init_level()
       end })
+
+      if ui.button("Unlock 'Reverse' Mode", { kind='danger'}) then
+        resetPlayerProgress()
+        -- unlock reverse mode
+        storage.reverseUnlocked = true
+        network.async(function()
+          storage.saveUserValues()
+        end)
+      end
     end)
   end
 

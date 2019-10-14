@@ -112,7 +112,8 @@ function draw_level()
             spr(((flicker or dim) and player.moved) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)
 
           elseif col==COL_FINISH 
-            or col==COL_FINISH_BONUS then
+            or (col==COL_FINISH_BONUS and storage.reverseUnlocked) 
+            then
             -- draw end
             spr(((flicker or dim) and storage.currLevel~=1) and 5 or 2, x*TILE_SIZE, y*TILE_SIZE)
             -- draw edge?
@@ -120,7 +121,8 @@ function draw_level()
             
           elseif col==COL_PATH 
            or col==COL_WRAP 
-           or col==COL_PATH_BONUS then
+           or (col==COL_PATH_BONUS and storage.reverseUnlocked) 
+           then
             -- draw path?
             spr((flicker or dim) and 4 or 1, x*TILE_SIZE, y*TILE_SIZE)
             -- draw edge?
