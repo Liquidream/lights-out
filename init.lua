@@ -7,7 +7,7 @@ function init_sugarcoat()
   
   use_palette(ak54)
   load_font ("assets/Hungry.ttf", 16, "main-font", true)
-  --load_font ("assets/Particle.ttf", 16, "main-font", true)
+  load_font ("assets/Particle.ttf", 16, "small-font")
   load_png("title", "assets/title-text-small.png", nil, true)
   screen_render_stretch(false)
   screen_render_integer_scale(false)

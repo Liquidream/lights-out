@@ -50,6 +50,7 @@ if CASTLE_PREFETCH then
     'sugarcoat/sugarcoat.lua',
     'assets/levels.png',
     'assets/Hungry.ttf',
+    'assets/Particle.ttf',
     'assets/splash.png',
     'assets/spritesheet.png',
     'assets/title-text.png',

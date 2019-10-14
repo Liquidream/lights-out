@@ -48,7 +48,7 @@ function draw_level()
 
   -- still loading?
   if not levelReady then
-    pprintc("  LOADING... ", 20, 47,29)
+    pprintc("  LOADING... ", 20, 46,5)
     -- abort now!
     return
   end
@@ -206,7 +206,7 @@ function draw_level()
   -- Draw UI  
   if storage.currLevel > 1 
    and game_time < 100 then
-    pprintc("LEVEL "..storage.currLevel, 1, 47,29)
+    pprintc("LEVEL "..storage.currLevel, 1, 46,5)
 
   elseif storage.currLevel == 1
    and game_time > 300 
@@ -222,6 +222,10 @@ function draw_level()
     if surface_exists("title") then
       spr_sheet("title", 0,16) 
     end
+    use_font("small-font")
+    pprint("CHOOSE YOUR PATH!", 20,35, 46,5)
+
+    use_font("main-font")
     pprint("EASY", 70,54, 7,5)
     pprint("HARD", 70,82, 39,31)
   end
