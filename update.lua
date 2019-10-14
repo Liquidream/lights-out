@@ -210,7 +210,8 @@ function checkTile()
     and not deadTile then
     -- player on start
     -- do nothing
-  elseif player.tileCol == COL_FINISH then
+  elseif player.tileCol == COL_FINISH
+    or player.tileCol==COL_FINISH_BONUS then
     -- player reached end
    -- log("- level complete -")
     Sounds.win:play()
@@ -220,9 +221,13 @@ function checkTile()
     state_time = 0
     player.angle = 0.25
     init_anim(player, player.win_anim)
+    -- set game mode (normal/reverse)
+    storage.gameMode = player.y<30 and 1 or 0
+    log("storage.gameMode = "..storage.gameMode)
 
   elseif (player.tileCol == COL_PATH 
-   or player.tileCol==COL_WRAP)
+   or player.tileCol==COL_WRAP
+   or player.tileCol==COL_PATH_BONUS)
    and not deadTile then
     -- player found path (valid movement)
     --log("valid move")
