@@ -33,6 +33,10 @@ function init_data()
   storage.getUserValue("currDeaths", 0)
   -- Difficulty level (Easy/Hard)
   storage.getUserValue("difficulty", 0)
+  -- Game Mode (Normal/Reverse)
+  storage.getUserValue("gameMode", 0)
+  -- Game State (Reverse mode unlocked?)
+  storage.getUserValue("reverseUnlocked", true) --false
   -- Get Global saved data
   refreshGlobalHighScores()
 end
@@ -45,6 +49,7 @@ function resetPlayerProgress()
   storage.currTime = 0
   storage.currDeaths = 0
   storage.difficulty = 0 -- 0=Easy, 1=Hard
+  storage.gameMode = 0 -- 0=Normal, 1=Reverse
   storage.saveUserValues(function()
     if gameState ~= GAME_STATE.COMPLETED then
       init_data()
@@ -54,13 +59,13 @@ function resetPlayerProgress()
   -- ####################################
   -- ...also wipe GLOBAL data!
   -- ####################################
-  --storage.setGlobalValue("globalHighScores",{})
+  --storage.setGlobalValue("globalHighScores-v2",{})
   -- ####################################
 end
 
 function refreshGlobalHighScores()
   -- Get Global saved data
-  storage.getGlobalValue("globalHighScores", {}, function(retValue) 
+  storage.getGlobalValue("globalHighScores-v2", {}, function(retValue) 
     globalHighScores = retValue
     -- debug contents
     for key,score in pairs(globalHighScores) do
@@ -88,12 +93,26 @@ function init_input()
 end
 
 function init_level()
+  -- setup globals, depending on level
+  if storage.currLevel == 1 then
+    -- set the defaults
+    COL_START = 38
+    COL_FINISH = 8
+  else
+    -- look for special game mode option
+    -- (and adjust data accordingly)
+    if storage.gameMode == 1 then
+      COL_START = 8
+      COL_FINISH = 38
+    end
+  end
+
   init_player()
   load_level(storage.currLevel)
   init_detail_anims()
   -- reset game time
   game_time = 0
-  state_time = 0
+  state_time = 0  
   -- set state
   gameState = GAME_STATE.LVL_PLAY   
   light_start = love.timer.getTime()

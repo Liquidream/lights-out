@@ -49,8 +49,10 @@ function levelUp()
     gameState = GAME_STATE.COMPLETED
     -- Submit player's score (if better than prev)
     submitHighScore()
+    -- unlock extra game mode
+    storage.reverseUnlocked = true
     -- reset back to level 1 again (for next play)
-    resetPlayerProgress()
+    resetPlayerProgress()    
   end
   -- Refresh Global saved data
   -- (do it periodically, so scores up-to-date)
@@ -86,13 +88,15 @@ function submitHighScore()
     local newScore = {
       time = storage.currTime,
       deaths = storage.currDeaths,
-      name = my_name
+      name = my_name,
+      difficulty = storage.difficulty,
+      mode = storage.gameMode,
     }
     -- add/replace player's score
     globalHighScores[my_id] = newScore
 
     -- save global changes
-    storage.setGlobalValue("globalHighScores",globalHighScores)
+    storage.setGlobalValue("globalHighScores-v2",globalHighScores)
   end
 end
 

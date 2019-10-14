@@ -83,7 +83,7 @@ function draw_level()
         or col==COL_KEY_PINK
         or col==COL_PLATFORM1
         or col==COL_PLATFORM2
-        or (col==COL_FINISH and storage.currLevel==1)
+        or ((col==COL_FINISH or col==COL_FINISH_BONUS) and storage.currLevel==1)
         then
           -- is tile still "lighting up"?
           local dim = false
@@ -111,13 +111,16 @@ function draw_level()
             -- draw edge?
             spr(((flicker or dim) and player.moved) and 13 or 10, x*TILE_SIZE, (y+1)*TILE_SIZE)
 
-          elseif col==COL_FINISH then
+          elseif col==COL_FINISH 
+            or col==COL_FINISH_BONUS then
             -- draw end
             spr(((flicker or dim) and storage.currLevel~=1) and 5 or 2, x*TILE_SIZE, y*TILE_SIZE)
             -- draw edge?
             spr(((flicker or dim) and storage.currLevel~=1) and 15 or 12, x*TILE_SIZE, (y+1)*TILE_SIZE)
             
-          elseif col==COL_PATH or col==COL_WRAP then
+          elseif col==COL_PATH 
+           or col==COL_WRAP 
+           or col==COL_PATH_BONUS then
             -- draw path?
             spr((flicker or dim) and 4 or 1, x*TILE_SIZE, y*TILE_SIZE)
             -- draw edge?
@@ -225,10 +228,15 @@ function draw_level()
     
     pprint("EASY", 70,40, 7,5)
     pprint("HARD", 70,68, 39,31)
+    if storage.reverseUnlocked then
+      pprint("REVERSE", 56,11, 26,30)
+    end
     
     -- small font stuff
     use_font("small-font")
-    pprint("CHOOSE YOUR PATH!", 20,20, 46,5)
+    if storage.reverseUnlocked ~= true then
+      pprint("CHOOSE YOUR PATH!", 20,20, 46,5)
+    end
     --if flr(t())%6 < 3 then
       pprint(" Code + Art   Music + SFX", -2,90, 21,29)
     --else
