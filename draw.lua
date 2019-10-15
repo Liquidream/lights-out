@@ -90,7 +90,7 @@ function draw_level(num)
         then
           -- is tile still "lighting up"?
           local dim = false
-          
+          local fadingAway = false
           if player.tileHistory[x..","..y] then
             if player.tileHistory[x..","..y] > 0 
              and player.tileHistory[x..","..y] < 1 then
@@ -104,6 +104,7 @@ function draw_level(num)
             elseif  player.tileHistory[x..","..y] < 0 then
               -- fading down
               dim = true
+              fadingAway = true
               player.tileHistory[x..","..y] 
                 = min(player.tileHistory[x..","..y]+0.05, 0)
             end
@@ -178,6 +179,7 @@ function draw_level(num)
             local fadeOutEnd = (phaseDuration/2) - fadeDuration
             local fading = phaseTime > fadeInStart and phaseTime < fadeInEnd
                         or phaseTime > fadeOutStart and phaseTime < fadeOutEnd
+                        or fadingAway
             if phaseTime > fadeInStart
             and phaseTime < fadeOutEnd then
               spr(fading and 27 or 26, x*TILE_SIZE, y*TILE_SIZE)
