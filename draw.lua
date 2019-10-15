@@ -60,7 +60,6 @@ function draw_level()
   
   local lightTime = love.timer.getTime()-light_start
   local segment = lightTime%1
-  --log(segment)
   local flicker = lightTime < MAX_LIGHT_DURATION
    and (segment>=.8 and segment<=1)  
 
@@ -200,7 +199,6 @@ function draw_level()
   if player.wrapX or player.wrapY then
     local offX = player.wrapX and (player.wrapX>0 and GAME_WIDTH-1 or -7) or player.newX
     local offY = player.wrapY and (player.wrapY>0 and GAME_HEIGHT-1 or -7) or player.newY
-    log("draw wrap!! "..offX..","..offY)
     aspr(player.curr_anim[player.frame_pos], 
       offX-(player.lastX-player.x)+4, 
       offY-(player.lastY-player.y)+4, 
