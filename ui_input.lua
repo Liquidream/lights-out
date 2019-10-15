@@ -33,9 +33,7 @@ with the... **LIGHTS OUT**!💡
         resetPlayerProgress()
         -- unlock reverse mode
         storage.reverseUnlocked = true
-        network.async(function()
-          storage.saveUserValues()
-        end)
+        storage.saveUserValues()
       end
     end)
   end

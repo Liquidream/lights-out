@@ -22,11 +22,6 @@ function init_data()
     my_name = user.username
   end)
   -- Get saved data...
-  -- Last level reached
-  storage.getUserValue("currLevel", START_LEVEL, function()
-    -- Now init level (either 1 or saved progress)
-    init_level()
-  end)
   -- Time taken since last reset/win
   storage.getUserValue("currTime", 0)
   -- Total no. of lives lost since last reset/win  
@@ -39,6 +34,11 @@ function init_data()
   storage.getUserValue("reverseUnlocked", false)
   -- Get Global saved data
   refreshGlobalHighScores()
+  -- Last level reached
+  storage.getUserValue("currLevel", START_LEVEL, function()
+    -- Now init level (either 1 or saved progress)
+    init_level()
+  end)
 end
 
 function resetPlayerProgress()
