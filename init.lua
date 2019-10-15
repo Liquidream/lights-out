@@ -5,13 +5,21 @@ _t=0
 function init_sugarcoat()
   init_sugar("Lights-Out", GAME_WIDTH, GAME_HEIGHT, GAME_SCALE)
   
-  use_palette(ak54)
+  -- start with splash screen palette 
+  load_png("splash", "assets/splash.png", palettes.pico8, true)
+
+  --use_palette(ak54)
   load_font ("assets/Hungry.ttf", 16, "main-font", true)
   load_font ("assets/Particle.ttf", 16, "small-font")
-  load_png("title", "assets/title-text-small.png", nil, true)
+  load_png("title", "assets/title-text-small.png", ak54, true)
   screen_render_stretch(false)
   screen_render_integer_scale(false)
   set_frame_waiting(60)
+
+  -- init splash
+  gameState = GAME_STATE.SPLASH 
+  use_palette(palettes.pico8)
+  splashStartTime = t()
 end
 
 function init_data()
@@ -35,10 +43,7 @@ function init_data()
   -- Get Global saved data
   refreshGlobalHighScores()
   -- Last level reached
-  storage.getUserValue("currLevel", START_LEVEL, function()
-    -- Now init level (either 1 or saved progress)
-    init_level()
-  end)
+  storage.getUserValue("currLevel", START_LEVEL)
 end
 
 function resetPlayerProgress()
@@ -107,7 +112,7 @@ function init_level()
       COL_FINISH = 38
     end
   end
-
+  
   init_player()
   load_level(storage.currLevel)
   init_detail_anims()
@@ -124,6 +129,7 @@ function init_level()
 end
 
 function load_level(lvl_num)
+  use_palette(ak54)
   local lvl_xoffset = ((storage.currLevel-1)%10*8)
   local lvl_yoffset = flr((storage.currLevel-1)/10)*8
   log("lvl_xoffset="..lvl_xoffset)
@@ -141,7 +147,7 @@ function load_level(lvl_num)
         player.x,player.y = x*TILE_SIZE, y*TILE_SIZE
         player.tx,player.ty = x,y
       end
-
+      
       -- look for "unplayable" levels
       if col==COL_PINK and storage.gameMode == 1 then 
         -- skip level
@@ -152,7 +158,7 @@ function load_level(lvl_num)
       end
     end
   end
-
+  
   -- check the first tile (player start)
   checkTile()
 end
@@ -266,9 +272,9 @@ end
 
 function load_assets()
   -- load gfx
-  load_png("spritesheet", "assets/spritesheet.png", nil, true)
+  load_png("spritesheet", "assets/spritesheet.png", ak54, true)
   spritesheet_grid(14,14)
-  load_png("levels", "assets/levels.png", nil, true)
+  load_png("levels", "assets/levels.png", ak54, true)
   -- capture pixel info
   scan_surface("levels")
   -- todo: load sfx + music

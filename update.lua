@@ -1,6 +1,14 @@
 local Sounds = require 'sounds'
 
---tweetCounter=0
+function updateSplash(dt)
+  if splashStartTime then
+      duration = t()-splashStartTime 
+      if duration > 3.53 then
+        -- Now show "Title" level
+         init_level()
+      end
+  end
+end
 
 function update_game(dt)
   _t=_t+1
@@ -17,8 +25,12 @@ function update_game(dt)
   --   end
   -- end
 
+  if gameState == GAME_STATE.SPLASH then
+    -- todo: splash screen
+    updateSplash(dt)
+
   -- play
-  if gameState == GAME_STATE.LVL_PLAY then
+  elseif gameState == GAME_STATE.LVL_PLAY then
     update_player(dt)
     game_time = game_time + 1
   
@@ -180,14 +192,11 @@ end
 
 -- check the tile the player is now on
 function checkTile()
-  --log("in checkTile...")
   local lvl_xoffset = ((storage.currLevel-1)%10*8)
   local lvl_yoffset = flr((storage.currLevel-1)/10)*8
   local cx = player.tx>0 and player.tx or 0
   local cy = player.ty>0 and player.ty or 0
   player.tileCol = sget(cx+lvl_xoffset,cy+lvl_yoffset,"levels")
-  -- log("...checkTile ("..cx+lvl_xoffset..","..cy+lvl_yoffset..") = "..player.tileCol)
-  -- log("player pos = "..player.x..","..player.y)
   local key = cx..","..cy
   local deadTile = player.tileHistory[key] and player.tileHistory[key]==0
 
@@ -204,10 +213,6 @@ function checkTile()
   local fading = phaseTime > fadeInStart and phaseTime < fadeInEnd
                or phaseTime > fadeOutStart and phaseTime < fadeOutEnd  
 
-  -- log("fading="..tostring(fading))
-  -- log("phaseTime="..tostring(phaseTime))
-  -- log("fadeInStart="..tostring(fadeInStart))
-  -- log("fadeOutEnd="..tostring(fadeOutEnd))
 
   if player.tileCol == COL_START
     and not deadTile then

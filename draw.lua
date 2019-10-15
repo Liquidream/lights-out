@@ -1,7 +1,20 @@
-local Sounds = require 'sounds'
+
+function drawSplash()
+  cls()
+  if duration then
+    local offset = math.sin(duration)*2
+    fade(max(14-(offset-1.1)*25,0))
+    -- title logo
+    if surface_exists("splash") then
+        local w,h = surface_size("splash")
+        spr_sheet("splash", flr(GAME_WIDTH/2-w/2), flr(GAME_HEIGHT/2-h/2))
+    end
+  end
+end
 
 function draw_game()
   cls()
+  
   -- set default pprint style
   printp(
     0x2220, 
@@ -17,10 +30,8 @@ function draw_game()
 
   if gameState == GAME_STATE.SPLASH then
     -- todo: splash screen
+    drawSplash()
 
-  elseif gameState == GAME_STATE.TITLE then
-    -- todo: title screen
-    
   elseif gameState == GAME_STATE.COMPLETED then
     draw_level(61)
     -- draw congrats!
