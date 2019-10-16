@@ -338,9 +338,9 @@ function makeParticles(col)
   pEmitter.angle = 23
   pEmitter.spread = 16 --math.pi --180
   pEmitter.lifetime = 1 -- Only want 1 burst
-  pEmitter.rate = 25
-  pEmitter.acc_min = 1
-  pEmitter.acc_max = 20
+  pEmitter.rate = 15
+  pEmitter.acc_min = 3
+  pEmitter.acc_max = 10
   pEmitter.size_min = 0
   pEmitter.size_max = 1
   pEmitter.max_rnd_start = 15
