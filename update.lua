@@ -25,6 +25,17 @@ function update_game(dt)
   --   end
   -- end
 
+  -- Update all particle systems
+  for key, psys in pairs(pSystems) do
+    psys:update(dt)
+
+    -- purge old emitters
+    if psys._lifecount > 100 then
+      --log("purging old pSystem...")
+      table.remove(pSystems, key)
+    end
+  end
+
   if gameState == GAME_STATE.SPLASH then
     -- todo: splash screen
     updateSplash(dt)
@@ -229,6 +240,7 @@ function checkTile()
     state_time = 0
     player.angle = 0.25
     init_anim(player, player.win_anim)
+    makeParticles(COL_FINISH)
 
   elseif (player.tileCol == COL_PATH 
    or player.tileCol==COL_WRAP
@@ -254,18 +266,22 @@ function checkTile()
     -- collect blue key (if not already)
     if not player.gotKey then
       player.gotKey = true
-      -- play collect sfx
-      -- Sounds.win:seek(25500,"samples")  -- temp SFX
-      -- Sounds.win:play()                 --
+      -- play collect sfx & do particles, etc.      
       Sounds.collect:play()
+      -- do particles, etc.
+      makeParticles(COL_PINK)
     end
 
   elseif player.tileCol == COL_PINK
    and player.gotKey
    and not deadTile then
-    -- player found blue path AND has blue
-   -- log("valid move")
-
+    -- player found key path AND has key
+    -- first time?
+    if not player.usedKey then
+    --if not player.tileHistory[key] then
+      makeParticles(COL_PINK)
+      player.usedKey = true
+    end
 
   elseif (player.tileCol == COL_PLATFORM1 
    or player.tileCol == COL_PLATFORM2)
@@ -307,9 +323,33 @@ function checkTile()
   -- and not player.fell 
   then
     player.tileHistory[key] = 0.5
-    table.insert( player.tileHistoryKeys, key )    
+    table.insert( player.tileHistoryKeys, key )
   end
 end
+
+function makeParticles(col)
+  -- create a new particle system
+  local pEmitter = Sprinklez:createSystem(
+    player.x, player.y)
+  -- set clip bounds
+  pEmitter.game_width = GAME_WIDTH
+  pEmitter.game_height = GAME_HEIGHT
+  -- tweak effect for pickup "poof" 
+  pEmitter.angle = 23
+  pEmitter.spread = 16 --math.pi --180
+  pEmitter.lifetime = 1 -- Only want 1 burst
+  pEmitter.rate = 25
+  pEmitter.acc_min = 1
+  pEmitter.acc_max = 20
+  pEmitter.size_min = 0
+  pEmitter.size_max = 1
+  pEmitter.max_rnd_start = 15
+  pEmitter.gravity = 0.15
+  pEmitter.cols = particle_cols[col] --{47,35,26,30} 
+
+  table.insert( pSystems, pEmitter )
+end
+
 
 -- step through (and loop) animations
 function update_anim(anim_obj)

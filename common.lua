@@ -25,6 +25,11 @@ START_LEVEL = 1
 MAX_LEVELS = 60
 MAX_LIGHT_DURATION = 3
 
+particle_cols={
+  [COL_PINK] = {47,35,26,30},
+  [COL_FINISH] = {47,9,8,6}
+}
+
 -- Andrew Kensler (+another black!)
 -- https://lospec.com/palette-list/andrew-kensler-54
 ak54 = {

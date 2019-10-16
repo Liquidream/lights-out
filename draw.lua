@@ -1,4 +1,5 @@
 
+
 function drawSplash()
   cls()
   if duration then
@@ -208,6 +209,11 @@ function draw_level(num)
   
   palt()
 
+  -- Draw all particle systems
+  for key, psys in pairs(pSystems) do
+    psys:draw()
+  end
+
   -- draw player (current anim cycle)
   if levelNum <= MAX_LEVELS then
     aspr(player.curr_anim[player.frame_pos], player.x+7, player.y+7, player.angle)
@@ -257,9 +263,9 @@ function draw_level(num)
       pprint("CHOOSE YOUR PATH!", 20,20, 46,5)
     end
     --if flr(t())%6 < 3 then
-      pprint(" Code + Art   Music + SFX", -2,90, 21,29)
+      pprint(" Code + Art   Music + SFX", -3,90, 21,29)
     --else
-      pprint("PAUL NICHOLAS  JASON RIGGS", -2,97, 18,29)
+      pprint("PAUL NICHOLAS  JASON RIGGS", -3,97, 18,29)
     --end
     use_font("main-font")
   end

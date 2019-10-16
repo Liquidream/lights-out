@@ -40,7 +40,7 @@ with the... **LIGHTS OUT**!💡
 
   ui.section("Global High Score", function()
     local scoreTable = [[
-| Name          | Time(#💀) |
+| NAME          | TIME (#💀) |
 | ------------- |:------------:|]]
 
     if globalHighScores then
@@ -50,7 +50,7 @@ with the... **LIGHTS OUT**!💡
        end) 
       do
         scoreTable = scoreTable.."\n"
-         ..score.name.." | "..formatTime(score.time).." ("..score.deaths..") |"
+         .."**"..score.name.."** | "..formatTime(score.time).." ("..score.deaths..") |"
       end
     end
     -- write final table    

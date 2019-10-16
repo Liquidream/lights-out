@@ -2,6 +2,9 @@ local Sounds = require 'sounds'
 
 _t=0
 
+-- all particle systems
+pSystems = {}
+
 function init_sugarcoat()
   init_sugar("Lights-Out", GAME_WIDTH, GAME_HEIGHT, GAME_SCALE)
   
