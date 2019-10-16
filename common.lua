@@ -27,7 +27,8 @@ MAX_LIGHT_DURATION = 3
 
 particle_cols={
   [COL_PINK] = {47,35,26,30},
-  [COL_FINISH] = {47,9,8,6}
+  [COL_FINISH] = {47,9,8,6},
+  [COL_START] = {47,9,8,6}  -- in Reverse mode
 }
 
 -- Andrew Kensler (+another black!)
