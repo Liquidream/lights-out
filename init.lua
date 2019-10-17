@@ -1,13 +1,28 @@
 local Sounds = require 'sounds'
 
+_t=0
+
+-- all particle systems
+pSystems = {}
+
 function init_sugarcoat()
   init_sugar("Lights-Out", GAME_WIDTH, GAME_HEIGHT, GAME_SCALE)
   
-  use_palette(ak54)
-  load_font ("assets/Particle.ttf", 16, "main-font", true)
+  -- start with splash screen palette 
+  load_png("splash", "assets/splash.png", palettes.pico8, true)
+
+  --use_palette(ak54)
+  load_font ("assets/Hungry.ttf", 16, "main-font", true)
+  load_font ("assets/Particle.ttf", 16, "small-font")
+  load_png("title", "assets/title-text-small.png", ak54, true)
   screen_render_stretch(false)
   screen_render_integer_scale(false)
   set_frame_waiting(60)
+
+  -- init splash
+  gameState = GAME_STATE.SPLASH 
+  use_palette(palettes.pico8)
+  splashStartTime = t()
 end
 
 function init_data()
@@ -18,17 +33,20 @@ function init_data()
     my_name = user.username
   end)
   -- Get saved data...
-  -- Last level reached
-  storage.getUserValue("currLevel", START_LEVEL, function()
-    -- Now init level (either 1 or saved progress)
-    init_level()
-  end)
   -- Time taken since last reset/win
   storage.getUserValue("currTime", 0)
   -- Total no. of lives lost since last reset/win  
   storage.getUserValue("currDeaths", 0)
+  -- Difficulty level (Easy/Hard)
+  storage.getUserValue("difficulty", 0)
+  -- Game Mode (Normal/Reverse)
+  storage.getUserValue("gameMode", 0)
+  -- Game State (Reverse mode unlocked?)
+  storage.getUserValue("reverseUnlocked", false)
   -- Get Global saved data
   refreshGlobalHighScores()
+  -- Last level reached
+  storage.getUserValue("currLevel", START_LEVEL)
 end
 
 function resetPlayerProgress()
@@ -38,6 +56,9 @@ function resetPlayerProgress()
   storage.currLevel = START_LEVEL
   storage.currTime = 0
   storage.currDeaths = 0
+  storage.difficulty = 0 -- 0=Easy, 1=Hard
+  storage.gameMode = 0 -- 0=Normal, 1=Reverse
+  storage.reverseUnlocked = false
   storage.saveUserValues(function()
     if gameState ~= GAME_STATE.COMPLETED then
       init_data()
@@ -47,13 +68,13 @@ function resetPlayerProgress()
   -- ####################################
   -- ...also wipe GLOBAL data!
   -- ####################################
-  --storage.setGlobalValue("globalHighScores",{})
+  --storage.setGlobalValue("globalHighScores-v2",{})
   -- ####################################
 end
 
 function refreshGlobalHighScores()
   -- Get Global saved data
-  storage.getGlobalValue("globalHighScores", {}, function(retValue) 
+  storage.getGlobalValue("globalHighScores-v2", {}, function(retValue) 
     globalHighScores = retValue
     -- debug contents
     for key,score in pairs(globalHighScores) do
@@ -81,12 +102,26 @@ function init_input()
 end
 
 function init_level()
+  -- setup globals, depending on level
+  if storage.currLevel == 1 then
+    -- set the defaults
+    COL_START = 38
+    COL_FINISH = 8
+  else
+    -- look for special game mode option
+    -- (and adjust data accordingly)
+    if storage.gameMode == 1 then
+      COL_START = 8
+      COL_FINISH = 38
+    end
+  end
+  
   init_player()
   load_level(storage.currLevel)
   init_detail_anims()
   -- reset game time
   game_time = 0
-  state_time = 0
+  state_time = 0  
   -- set state
   gameState = GAME_STATE.LVL_PLAY   
   light_start = love.timer.getTime()
@@ -97,24 +132,36 @@ function init_level()
 end
 
 function load_level(lvl_num)
-  local lvl_offset = (storage.currLevel-1)*8
+  use_palette(ak54)
+  local lvl_xoffset = ((storage.currLevel-1)%10*8)
+  local lvl_yoffset = flr((storage.currLevel-1)/10)*8
+  log("lvl_xoffset="..lvl_xoffset)
+  log("lvl_yoffset="..lvl_yoffset)
   -- todo: read pixel data for level
   spritesheet("levels")
   for x=0,7 do
     for y=0,7 do
-      local col=sget(x+lvl_offset, y, "levels")
+      local col=sget(x+lvl_xoffset, y+lvl_yoffset, "levels")
       -- handle level data
       if col==COL_START then
         -- found start
         log("found player start at: "..x..","..y)
         -- place player at start
-        player.x,player.y = x*8,y*8
+        player.x,player.y = x*TILE_SIZE, y*TILE_SIZE
         player.tx,player.ty = x,y
-      else
+      end
+      
+      -- look for "unplayable" levels
+      if col==COL_PINK and storage.gameMode == 1 then 
+        -- skip level
+        log("skipping 'unplayable' level..."..lvl_num)
+        levelUp()
+        init_level()
+        return
       end
     end
   end
-
+  
   -- check the first tile (player start)
   checkTile()
 end
@@ -124,17 +171,18 @@ function init_player()
     x = 30,
     y = 30,
     angle = 0.25, --0=right, 0.25=down, 0.5=left, 0.75=top
-    idle_anim = {18},
-    walk_anim_1 = {16,17,17,17},
-    walk_anim_2 = {18,19,19,19},
-    fall_anim = {24,25,26,27,28,29},
-    win_anim = {32,33,34,35},
+    idle_anim = {60},
+    walk_anim_1 = {61,62,62,61},
+    walk_anim_2 = {63,64,64,63},
+    fall_anim = {70,71,72,73,74,75,76,77,77,77,77,77},
+    win_anim = {80,81,82,83,84,85,86},
     frame_pos = 1,
-    frame_delay = 5,
+    frame_delay = 4,
     frame_count = 0,
     moving = false,
-    moveFrameCount = 0,
+    moveFrameCount = nil,
     tileHistory={},
+    tileHistoryKeys={},
     moveCount = 0, -- number of moves player has made
   }
   player.curr_anim = player.idle_anim
@@ -145,14 +193,14 @@ function init_player_move(angle, dx, dy)
   player.angle = angle 
   
   -- assume normal move (within screen bounds?)
-  player.newX = player.x+(8*dx)
-  player.newY = player.y+(8*dy)
+  player.newX = player.x+(TILE_SIZE*dx)
+  player.newY = player.y+(TILE_SIZE*dy)
 
   -- check for "wrap" screen movement
-  if player.newX < 0 then player.wrapX=1 player.newX = 56 end
-  if player.newY < 0 then player.wrapY=1 player.newY = 56 end
-  if player.newX > 56 then player.wrapX=-1 player.newX = 0 end
-  if player.newY > 56 then player.wrapY=-1 player.newY = 0 end
+  if player.newX < 0 then player.wrapX=1 player.newX = (GAME_WIDTH-TILE_SIZE) end
+  if player.newY < 0 then player.wrapY=1 player.newY = (GAME_HEIGHT-TILE_SIZE) end
+  if player.newX > (GAME_WIDTH-TILE_SIZE) then player.wrapX=-1 player.newX = 0 end
+  if player.newY > (GAME_HEIGHT-TILE_SIZE) then player.wrapY=-1 player.newY = 0 end
 
   -- check to see if player on a "wrap" tile
   -- (if not, then undo the move)
@@ -167,8 +215,8 @@ function init_player_move(angle, dx, dy)
   end
 
    -- calc tween "smoothness"
-   local frames = 12
-   local pxDist = 8
+   local frames = 16 --16
+   local pxDist = TILE_SIZE
    player.dx = (pxDist/frames) * dx
    player.dy = (pxDist/frames) * dy
    player.moveFrameCount = frames
@@ -188,9 +236,9 @@ end
 function init_anim(anim_obj, anim, func_on_finish)
   anim_obj.curr_anim = anim
   anim_obj.frame_count = 0
-  if anim_obj.frame_pos > #anim then
+  --if anim_obj.frame_pos > #anim then
     anim_obj.frame_pos = 1
-  end
+  --end
   -- set the function to run on finish (if applicable)
   anim_obj.func_on_finish = func_on_finish
 end
@@ -220,41 +268,54 @@ function init_sounds()
 
   Sounds.startLevel = Sound:new('start_level.mp3', 3)
   Sounds.startLevel:setVolume(0.7)
+  
+  Sounds.collect = Sound:new('collect.mp3', 3)
+  Sounds.collect:setVolume(0.7)
 end
 
 function load_assets()
   -- load gfx
-  load_png("spritesheet", "assets/spritesheet.png", nil, true)
-  load_png("levels", "assets/levels.png", nil, true)
+  load_png("spritesheet", "assets/spritesheet.png", ak54, true)
+  spritesheet_grid(14,14)
+  load_png("levels", "assets/levels.png", ak54, true)
   -- capture pixel info
   scan_surface("levels")
-
   -- todo: load sfx + music
   init_sounds()
-
 end
 
 function init_detail_anims()
   -- random monsters
-  monsters = {}  
-  local frames = {}
-  for i=40,79 do
-    table.insert(frames,i)
-  end
+  monsters = {}
   for i=1,irnd(2)+2 do
-    local val = irnd(64)
-    local cx,cy = val%8, flr(val/8)    
+    local val = irnd(GAME_WIDTH)
+    local cx,cy = val%TILE_SIZE, flr(val/TILE_SIZE)
     if sget(cx, cy, "levels")==0 
     and sget(cx, cy-1, "levels")==0 
     then
+      local frames = create_monster_frames()
       table.insert(monsters, {
-        x = cx*8,
-        y = cy*8,
+        x = cx*TILE_SIZE,
+        y = cy*TILE_SIZE,
         curr_anim = frames,
-        frame_pos = irnd(24),
+        frame_pos = irnd(#frames),
         frame_delay = 5,
         frame_count = 0,
       })      
     end
   end
+end
+
+function create_monster_frames()
+  resetRNG()
+  local frames = { 91, 92 }
+  for i=1,rnd(20)+20 do
+    table.insert(frames, 93)
+  end
+  table.insert(frames, 92)
+  table.insert(frames, 91)
+  for i=1,rnd(20)+30 do
+    table.insert(frames, 94)
+  end
+  return frames
 end

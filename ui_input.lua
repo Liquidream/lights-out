@@ -19,13 +19,28 @@ with the... **LIGHTS OUT**!💡
 
   end)
 
+  -- DEBUG: Allow level selection in debug
+  if DEBUG_MODE then
+    ui.section("🐞 === DEBUG MENU === 🤫",  { defaultOpen = true }, function()
+    
+      ui.numberInput("Warp to Level", storage.currLevel, { min=1, max=MAX_LEVELS, onChange=function(value)
+        -- Level jump
+        storage.currLevel = value
+        init_level()
+      end })
 
-  
--- TODO: Sort the table by score+deaths, reverse order
+      if ui.button("Unlock 'Reverse' Mode", { kind='danger'}) then
+        resetPlayerProgress()
+        -- unlock reverse mode
+        storage.reverseUnlocked = true
+        storage.saveUserValues()
+      end
+    end)
+  end
 
   ui.section("Global High Score", function()
     local scoreTable = [[
-| Name          | Time(#💀) |
+| NAME          | TIME (#💀) |
 | ------------- |:------------:|]]
 
     if globalHighScores then
@@ -35,7 +50,7 @@ with the... **LIGHTS OUT**!💡
        end) 
       do
         scoreTable = scoreTable.."\n"
-         ..score.name.." | "..formatTime(score.time).." ("..score.deaths..") |"
+         .."**"..score.name.."** | "..formatTime(score.time).." ("..score.deaths..") |"
       end
     end
     -- write final table    
@@ -54,7 +69,7 @@ with the... **LIGHTS OUT**!💡
 **Creative Director**:  
 **[Hilda Nicholas](https://www.instagram.com/hildanicholas)**
 
-**"Particle" Font**:  
+**'Hungry' + 'Particle' Fonts**:  
 **[Eeve Somepx](https://twitter.com/somepx)**
 
 #### Special Thanks to the following supporters on [Patreon](https://www.patreon.com/liquidream):

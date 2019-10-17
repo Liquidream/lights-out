@@ -46,4 +46,10 @@ function Sound:setLooping(shouldLoop)
   end
 end
 
+function Sound:seek(position, unit)
+  for i = 1, self.cacheSize do
+    self.sources[i]:seek(position, unit);
+  end
+end
+
 return Sound;
