@@ -245,7 +245,7 @@ function checkTile()
     state_time = 0
     player.angle = 0.25
     init_anim(player, player.win_anim)
-    makeParticles(player.x, player.y, COL_FINISH)
+    makeParticles(player.x, player.y-4, COL_FINISH)
 
   elseif (player.tileCol == COL_PATH 
    or player.tileCol==COL_WRAP
@@ -274,7 +274,7 @@ function checkTile()
       -- play collect sfx & do particles, etc.      
       Sounds.collect:play()
       -- do particles, etc.
-      makeParticles(player.x, player.y, COL_PINK)
+      makeParticles(player.x, player.y-4, COL_PINK)
     end
 
   elseif player.tileCol == COL_PINK
@@ -284,7 +284,7 @@ function checkTile()
     -- first time?
     if not player.usedKey then
     --if not player.tileHistory[key] then
-      makeParticles(player.x, player.y, COL_PINK)
+      makeParticles(player.x, player.y-4, COL_PINK)
       player.usedKey = true
     end
 
@@ -344,7 +344,7 @@ function makeParticles(x, y, col)
   pEmitter.lifetime = 1 -- Only want 1 burst
   pEmitter.rate = 15
   pEmitter.acc_min = 3
-  pEmitter.acc_max = 10
+  pEmitter.acc_max = 7
   pEmitter.size_min = 0
   pEmitter.size_max = 1
   pEmitter.max_rnd_start = 15
