@@ -2,7 +2,7 @@
 --
 -- Constants
 --
-DEBUG_MODE = true
+DEBUG_MODE = false
 GAME_WIDTH = 112  -- Tilesize=14 * 8
 GAME_HEIGHT = 112
 GAME_SCALE = 3

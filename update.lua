@@ -6,7 +6,6 @@ function updateSplash(dt)
       if duration > 3.53 then
         -- Now show "Title" level
          init_level()
-         gameState = GAME_STATE.COMPLETED
       end
   end
 end
