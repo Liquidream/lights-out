@@ -6,6 +6,7 @@ function updateSplash(dt)
       if duration > 3.53 then
         -- Now show "Title" level
          init_level()
+         gameState = GAME_STATE.COMPLETED
       end
   end
 end
@@ -60,6 +61,11 @@ function update_game(dt)
       end
       saveProgress()
       levelUp()      
+    end
+
+  elseif gameState == GAME_STATE.COMPLETED then
+    if _t%5==0 then
+      makeParticles(rnd(GAME_WIDTH), rnd(GAME_HEIGHT), rnd(2)<1 and COL_FINISH or COL_PINK)
     end
   end
 end
@@ -240,7 +246,7 @@ function checkTile()
     state_time = 0
     player.angle = 0.25
     init_anim(player, player.win_anim)
-    makeParticles(COL_FINISH)
+    makeParticles(player.x, player.y, COL_FINISH)
 
   elseif (player.tileCol == COL_PATH 
    or player.tileCol==COL_WRAP
@@ -269,7 +275,7 @@ function checkTile()
       -- play collect sfx & do particles, etc.      
       Sounds.collect:play()
       -- do particles, etc.
-      makeParticles(COL_PINK)
+      makeParticles(player.x, player.y, COL_PINK)
     end
 
   elseif player.tileCol == COL_PINK
@@ -279,7 +285,7 @@ function checkTile()
     -- first time?
     if not player.usedKey then
     --if not player.tileHistory[key] then
-      makeParticles(COL_PINK)
+      makeParticles(player.x, player.y, COL_PINK)
       player.usedKey = true
     end
 
@@ -327,10 +333,9 @@ function checkTile()
   end
 end
 
-function makeParticles(col)
+function makeParticles(x, y, col)
   -- create a new particle system
-  local pEmitter = Sprinklez:createSystem(
-    player.x, player.y)
+  local pEmitter = Sprinklez:createSystem(x, y)
   -- set clip bounds
   pEmitter.game_width = GAME_WIDTH
   pEmitter.game_height = GAME_HEIGHT

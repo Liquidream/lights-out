@@ -41,11 +41,11 @@ function draw_game()
     pprintc("THE GAME!", 34, 47,29)    
     local myScore = globalHighScores[my_id]
     if myScore then
-      pprint("TIME = "..formatTime(myScore.time), 8,51, 45,29)
-      pprint("DEATHS = "..myScore.deaths, 0,61, 38,29)
+      pprint("TIME = "..formatTime(myScore.time), 16,51, 45,29)
+      pprint("DEATHS = "..myScore.deaths, 16,61, 38,29)
     end
-    pprintc("DON'T FORGET TO", 80, 17,29)
-    pprintc("SHARE YOUR SCORE", 90, 17,29)
+    pprint("DON'T FORGET TO", 1,80, 17,29)
+    pprint("SHARE YOUR SCORE", -2,90, 17,29)
   
   else
   --   -- normal play (level intro/outro/game-over)    
