@@ -263,9 +263,9 @@ function draw_level(num)
       pprint("CHOOSE YOUR PATH!", 20,20, 46,5)
     end
     --if flr(t())%6 < 3 then
-      pprint(" Code + Art   Music + SFX", -3,90, 21,29)
+      pprint(" Code + Art   Music + SFX", -2,90, 21,29)
     --else
-      pprint("PAUL NICHOLAS  JASON RIGGS", -3,97, 18,29)
+      pprint("PAUL NICHOLAS  JASON RIGGS", -2,97, 18,29)
     --end
     use_font("main-font")
   end
